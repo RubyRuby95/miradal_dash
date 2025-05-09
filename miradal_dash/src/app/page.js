@@ -28,7 +28,7 @@ const pieData = [
   { name: 'Grupo C', value: 300 },
 ];
 
-const colors = ['#8884d8', '#82ca9d', '#ffc658'];
+const colores = ['#8884d8', '#82ca9d', '#ffc658'];
 
 export default function Home() {
   return (
@@ -78,7 +78,7 @@ export default function Home() {
                 dataKey="value"
               >
                 {pieData.map((item, index) => (
-                  <Cell key={index} fill={colors[index % colors.length]} />
+                  <Cell key={index} fill={colores[index % colores.length]} />
                 ))}
               </Pie>
               <Tooltip />
