@@ -19,7 +19,6 @@ export function agruparPorSemana(respuestas) {
 //procesa las respuestas
 export function contarRespuestasPorSemana(respuestas) {
   const agrupado = {};
-
   respuestas.forEach(({ timestamp, respuestas }) => {
     const fecha = parseISO(timestamp);
     const inicioSemana = startOfWeek(fecha, { weekStartsOn: 1 });

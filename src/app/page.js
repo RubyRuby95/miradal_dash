@@ -1,8 +1,8 @@
 'use client';
 import { useState, useEffect } from "react";
-import {contarRespuestasPorSemana } from "./utils/procesarRespuesta";
-//import respuestasJson from "../../public/data/respuestas.json";
-import apiClient from "../../lib/apiClient";
+import {agruparPorSemana, contarRespuestasPorSemana } from "./utils/procesarRespuesta";
+import respuestasJson from "../../public/data/respuestas.json";
+//import apiClient from "../../lib/apiClient";
 
 import {
   BarChart,
@@ -26,10 +26,13 @@ import { MatrixController, MatrixElement } from 'chartjs-chart-matrix';
 
 Chart.register(...registerables, MatrixController, MatrixElement);
 
-const colors = ['#0b3b05', '#071f03', '#126304'];
 const animales = [
   "percibe-aves", "percibe-peces", "percibe-ganado", "percibe-ranas", "percibe-insectos"
 ];
+
+//const res = await apiClient.get('/respuestas');
+//const data = res.data;
+
 
 export default function Dashboard() {
   const [barDataBasura, setBarDataBasura] = useState([]);
@@ -38,7 +41,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     //const porSemana = contarRespuestasPorSemana(respuestasJson);
-    const porSemana = contarRespuestasPorSemana(apiClient);
+    const porSemana = contarRespuestasPorSemana(respuestasJson);
     const semanas = Object.keys(porSemana).sort();
 
     const basura = [];
