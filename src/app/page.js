@@ -166,36 +166,34 @@ export default function Dashboard() {
           <canvas id="heatmapCanvas" />
         </div>
 
-          <div className="titulo2">Percepción de Desechos</div>
-        <div>
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={barDataBasura}>
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="si" stackId="a" fill="#2d4b42" />
-              <Bar dataKey="no" stackId="a" fill="#36bbaa" />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
+        <div className="titulo2">Percepción de Desechos</div>
+          <div className="chart-container">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={barDataBasura}>
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="si" stackId="a" fill="#2d4b42" />
+                <Bar dataKey="no" stackId="a" fill="#36bbaa" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
         <div className="titulo2">
           Percepción de Agua Turbia
         </div>
-        <div >
-         
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={barDataAgua}>
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="si" stackId="b" fill="#2d4b42" />
-              <Bar dataKey="no" stackId="b" fill="#36bbaa" />
-            </BarChart>
-          </ResponsiveContainer>
+        <div className="chart-container">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={barDataAgua}>
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="si" stackId="b" fill="#2d4b42" />
+                <Bar dataKey="no" stackId="b" fill="#36bbaa" />
+              </BarChart>
+            </ResponsiveContainer>
         </div>
-        
       </div>
     </div>
   );
