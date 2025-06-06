@@ -1,0 +1,199 @@
+[
+  {
+    "id-respuesta": "RSP001",
+    "timestamp": "2025-04-15 10:20:34",
+    "respuestas": [
+      { "item": "conoce-nombre-humedal", "respuesta": "si" },
+      { "item": "nombre-humedal", "respuesta": "los patos" },
+      { "item": "nombre-humedal-preproc", "respuesta": "los-patos" },
+      { "item": "percibe-aves", "respuesta": "si" },
+      { "item": "percibe-peces", "respuesta": "no" },
+      { "item": "percibe-ganado", "respuesta": "no" },
+      { "item": "percibe-ranas", "respuesta": "si" },
+      { "item": "percibe-insectos", "respuesta": "no" },
+      { "item": "percibe-desechos", "respuesta": "no" },
+      { "item": "percibe-agua-turbia", "respuesta": "si" },
+      { "item": "huele", "respuesta": "3" },
+      { "item": "comentario", "respuesta": "Agua algo sucia, pero muchas aves." }
+    ]
+  },
+  {
+    "id-respuesta": "RSP002",
+    "timestamp": "2025-04-19 13:45:10",
+    "respuestas": [
+      { "item": "conoce-nombre-humedal", "respuesta": "no" },
+      { "item": "nombre-humedal", "respuesta": "" },
+      { "item": "nombre-humedal-preproc", "respuesta": "" },
+      { "item": "percibe-aves", "respuesta": "no" },
+      { "item": "percibe-peces", "respuesta": "no" },
+      { "item": "percibe-ganado", "respuesta": "si" },
+      { "item": "percibe-ranas", "respuesta": "no" },
+      { "item": "percibe-insectos", "respuesta": "si" },
+      { "item": "percibe-desechos", "respuesta": "si" },
+      { "item": "percibe-agua-turbia", "respuesta": "si" },
+      { "item": "huele", "respuesta": "2" },
+      { "item": "comentario", "respuesta": "No sabía que era un humedal." }
+    ]
+  },
+  {
+    "id-respuesta": "RSP003",
+    "timestamp": "2025-04-25 09:12:55",
+    "respuestas": [
+      { "item": "conoce-nombre-humedal", "respuesta": "si" },
+      { "item": "nombre-humedal", "respuesta": "miraflores" },
+      { "item": "nombre-humedal-preproc", "respuesta": "miraflores" },
+      { "item": "percibe-aves", "respuesta": "si" },
+      { "item": "percibe-peces", "respuesta": "si" },
+      { "item": "percibe-ganado", "respuesta": "no" },
+      { "item": "percibe-ranas", "respuesta": "si" },
+      { "item": "percibe-insectos", "respuesta": "no" },
+      { "item": "percibe-desechos", "respuesta": "no" },
+      { "item": "percibe-agua-turbia", "respuesta": "no" },
+      { "item": "huele", "respuesta": "1" },
+      { "item": "comentario", "respuesta": "Se siente limpio y tranquilo." }
+    ]
+  },
+  {
+    "id-respuesta": "RSP004",
+    "timestamp": "2025-05-02 16:05:12",
+    "respuestas": [
+      { "item": "conoce-nombre-humedal", "respuesta": "no" },
+      { "item": "nombre-humedal", "respuesta": "" },
+      { "item": "nombre-humedal-preproc", "respuesta": "" },
+      { "item": "percibe-aves", "respuesta": "no" },
+      { "item": "percibe-peces", "respuesta": "no" },
+      { "item": "percibe-ganado", "respuesta": "no" },
+      { "item": "percibe-ranas", "respuesta": "no" },
+      { "item": "percibe-insectos", "respuesta": "no" },
+      { "item": "percibe-desechos", "respuesta": "no" },
+      { "item": "percibe-agua-turbia", "respuesta": "no" },
+      { "item": "huele", "respuesta": "1" },
+      { "item": "comentario", "respuesta": "" }
+    ]
+  },
+  {
+    "id-respuesta": "RSP005",
+    "timestamp": "2025-05-07 11:30:00",
+    "respuestas": [
+      { "item": "conoce-nombre-humedal", "respuesta": "si" },
+      { "item": "nombre-humedal", "respuesta": "el trébol" },
+      { "item": "nombre-humedal-preproc", "respuesta": "el-trebol" },
+      { "item": "percibe-aves", "respuesta": "si" },
+      { "item": "percibe-peces", "respuesta": "si" },
+      { "item": "percibe-ganado", "respuesta": "si" },
+      { "item": "percibe-ranas", "respuesta": "no" },
+      { "item": "percibe-insectos", "respuesta": "no" },
+      { "item": "percibe-desechos", "respuesta": "no" },
+      { "item": "percibe-agua-turbia", "respuesta": "si" },
+      { "item": "huele", "respuesta": "2" },
+      { "item": "comentario", "respuesta": "Muy natural, aunque un poco olor." }
+    ]
+  },
+  {
+    "id-respuesta": "RSP006",
+    "timestamp": "2025-04-29 13:45:10",
+    "respuestas": [
+      { "item": "conoce-nombre-humedal", "respuesta": "no" },
+      { "item": "nombre-humedal", "respuesta": "" },
+      { "item": "nombre-humedal-preproc", "respuesta": "" },
+      { "item": "percibe-aves", "respuesta": "si" },
+      { "item": "percibe-peces", "respuesta": "no" },
+      { "item": "percibe-ganado", "respuesta": "si" },
+      { "item": "percibe-ranas", "respuesta": "si" },
+      { "item": "percibe-insectos", "respuesta": "si" },
+      { "item": "percibe-desechos", "respuesta": "si" },
+      { "item": "percibe-agua-turbia", "respuesta": "si" },
+      { "item": "huele", "respuesta": "1" },
+      { "item": "comentario", "respuesta": "0No sabía que era un humedal." }
+    ]
+  },
+  {
+    "id-respuesta": "RSP007",
+    "timestamp": "2025-05-01 13:45:10",
+    "respuestas": [
+      { "item": "conoce-nombre-humedal", "respuesta": "si" },
+      { "item": "nombre-humedal", "respuesta": "miradal" },
+      { "item": "nombre-humedal-preproc", "respuesta": "miradal" },
+      { "item": "percibe-aves", "respuesta": "si" },
+      { "item": "percibe-peces", "respuesta": "no" },
+      { "item": "percibe-ganado", "respuesta": "si" },
+      { "item": "percibe-ranas", "respuesta": "no" },
+      { "item": "percibe-insectos", "respuesta": "si" },
+      { "item": "percibe-desechos", "respuesta": "si" },
+      { "item": "percibe-agua-turbia", "respuesta": "si" },
+      { "item": "huele", "respuesta": "3" },
+      { "item": "comentario", "respuesta": "1No sabía que era un humedal." }
+    ]
+  },
+  {
+    "id-respuesta": "RSP008",
+    "timestamp": "2025-05-04 13:45:10",
+    "respuestas": [
+      { "item": "conoce-nombre-humedal", "respuesta": "no" },
+      { "item": "nombre-humedal", "respuesta": "" },
+      { "item": "nombre-humedal-preproc", "respuesta": "" },
+      { "item": "percibe-aves", "respuesta": "no" },
+      { "item": "percibe-peces", "respuesta": "no" },
+      { "item": "percibe-ganado", "respuesta": "si" },
+      { "item": "percibe-ranas", "respuesta": "si" },
+      { "item": "percibe-insectos", "respuesta": "si" },
+      { "item": "percibe-desechos", "respuesta": "si" },
+      { "item": "percibe-agua-turbia", "respuesta": "si" },
+      { "item": "huele", "respuesta": "2" },
+      { "item": "comentario", "respuesta": "2No sabía que era un humedal." }
+    ]
+  },
+  {
+    "id-respuesta": "RSP009",
+    "timestamp": "2025-04-17 13:45:10",
+    "respuestas": [
+      { "item": "conoce-nombre-humedal", "respuesta": "no" },
+      { "item": "nombre-humedal", "respuesta": "" },
+      { "item": "nombre-humedal-preproc", "respuesta": "" },
+      { "item": "percibe-aves", "respuesta": "no" },
+      { "item": "percibe-peces", "respuesta": "no" },
+      { "item": "percibe-ganado", "respuesta": "si" },
+      { "item": "percibe-ranas", "respuesta": "no" },
+      { "item": "percibe-insectos", "respuesta": "si" },
+      { "item": "percibe-desechos", "respuesta": "si" },
+      { "item": "percibe-agua-turbia", "respuesta": "no" },
+      { "item": "huele", "respuesta": "1" },
+      { "item": "comentario", "respuesta": "3No sabía que era un humedal." }
+    ]
+  },
+  {
+    "id-respuesta": "RSP010",
+    "timestamp": "2025-04-16 13:45:10",
+    "respuestas": [
+      { "item": "conoce-nombre-humedal", "respuesta": "si" },
+      { "item": "nombre-humedal", "respuesta": "miramar" },
+      { "item": "nombre-humedal-preproc", "respuesta": "miramar" },
+      { "item": "percibe-aves", "respuesta": "no" },
+      { "item": "percibe-peces", "respuesta": "si" },
+      { "item": "percibe-ganado", "respuesta": "si" },
+      { "item": "percibe-ranas", "respuesta": "si" },
+      { "item": "percibe-insectos", "respuesta": "si" },
+      { "item": "percibe-desechos", "respuesta": "no" },
+      { "item": "percibe-agua-turbia", "respuesta": "si" },
+      { "item": "huele", "respuesta": "2" },
+      { "item": "comentario", "respuesta": "4No sabía que era un humedal." }
+    ]
+  },{
+    "id-respuesta": "RSP002",
+    "timestamp": "2025-04-22 13:45:10",
+    "respuestas": [
+      { "item": "conoce-nombre-humedal", "respuesta": "no" },
+      { "item": "nombre-humedal", "respuesta": "" },
+      { "item": "nombre-humedal-preproc", "respuesta": "" },
+      { "item": "percibe-aves", "respuesta": "si" },
+      { "item": "percibe-peces", "respuesta": "si" },
+      { "item": "percibe-ganado", "respuesta": "si" },
+      { "item": "percibe-ranas", "respuesta": "si" },
+      { "item": "percibe-insectos", "respuesta": "si" },
+      { "item": "percibe-desechos", "respuesta": "si" },
+      { "item": "percibe-agua-turbia", "respuesta": "si" },
+      { "item": "huele", "respuesta": "3" },
+      { "item": "comentario", "respuesta": "5No sabía que era un humedal." }
+    ]
+  }
+]

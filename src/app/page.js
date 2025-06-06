@@ -1,8 +1,10 @@
 'use client';
+import { useState, useEffect } from "react";
+import {contarRespuestasPorSemana } from "./utils/procesarRespuesta";
+//import respuestasJson from "../../public/data/respuestas.json";
+import apiClient from "../../lib/apiClient";
 
 import {
-  LineChart,
-  Line,
   BarChart,
   Bar,
   PieChart,
@@ -15,80 +17,183 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-const data = [
-  { name: 'Vacas', value: 400 },
-  { name: 'Ranas', value: 300 },
-  { name: 'Aves', value: 500 },
-  { name: 'Peces', value: 200 },
+import {
+  Chart,
+  registerables
+} from 'chart.js';
+
+import { MatrixController, MatrixElement } from 'chartjs-chart-matrix';
+
+Chart.register(...registerables, MatrixController, MatrixElement);
+
+const colors = ['#0b3b05', '#071f03', '#126304'];
+const animales = [
+  "percibe-aves", "percibe-peces", "percibe-ganado", "percibe-ranas", "percibe-insectos"
 ];
 
-const pieData = [
-  { name: 'Grupo A', value: 400 },
-  { name: 'Grupo B', value: 300 },
-  { name: 'Grupo C', value: 300 },
-];
+export default function Dashboard() {
+  const [barDataBasura, setBarDataBasura] = useState([]);
+  const [barDataAgua, setBarDataAgua] = useState([]);
+  const [heatmapMatrix, setHeatmapMatrix] = useState([]);
 
-const colores = ['#8884d8', '#82ca9d', '#ffc658'];
+  useEffect(() => {
+    //const porSemana = contarRespuestasPorSemana(respuestasJson);
+    const porSemana = contarRespuestasPorSemana(apiClient);
+    const semanas = Object.keys(porSemana).sort();
 
-export default function Home() {
+    const basura = [];
+    const agua = [];
+    const heatmap = [];
+
+    semanas.forEach((semana, xIndex) => {
+      let siBasura = 0, noBasura = 0;
+      let siAgua = 0, noAgua = 0;
+      const animalContadores = {
+        "percibe-aves": 0,
+        "percibe-peces": 0,
+        "percibe-ganado": 0,
+        "percibe-ranas": 0,
+        "percibe-insectos": 0,
+      };
+
+      porSemana[semana].forEach((resps) => {
+        resps.forEach(({ item, respuesta }) => {
+          if (item === "percibe-desechos") {
+            respuesta === "si" ? siBasura++ : noBasura++;
+          }
+          if (item === "percibe-agua-turbia") {
+            respuesta === "si" ? siAgua++ : noAgua++;
+          }
+          if (animales.includes(item) && respuesta === "si") {
+            animalContadores[item]++;
+          }
+        });
+      });
+
+      basura.push({ name: semana, si: siBasura, no: noBasura });
+      agua.push({ name: semana, si: siAgua, no: noAgua });
+
+      animales.forEach((animal, yIndex) => {
+        heatmap.push({
+          x: xIndex,
+          y: yIndex,
+          v: animalContadores[animal],
+        });
+      });
+    });
+
+    setBarDataBasura(basura);
+    setBarDataAgua(agua);
+    setHeatmapMatrix(heatmap);
+  }, []);
+
+  useEffect(() => {
+    const canvas = document.getElementById('heatmapCanvas');
+    if (!canvas || !heatmapMatrix.length) return;
+
+    const chart = new Chart(canvas, {
+      type: 'matrix',
+      data: {
+        datasets: [{
+          label: 'Percepción de animales',
+          data: heatmapMatrix,
+          backgroundColor(ctx) {
+            const value = ctx.raw.v;
+            const alpha = Math.min(1, value / 10);
+            return `rgba(0, 150, 0, ${alpha})`;
+          },
+          width: ({ chart }) => {
+          const area = chart.chartArea;
+          return area ? area.width / 7 - 4 : 40;
+          },
+          height: ({ chart }) => {
+          const area = chart.chartArea;
+          return area ? area.height / 5 - 4 : 40;
+          },
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: {
+            type: 'linear',
+            min: -0.5,
+            max: 6.5,
+            ticks: { stepSize: 1 },
+            grid: { display: false }
+          },
+          y: {
+            type: 'linear',
+            min: -0.5,
+            max: animales.length - 0.5,
+            ticks: {
+              stepSize: 1,
+              callback: (val) => animales[val]
+            },
+            grid: { display: false }
+          }
+        },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label(ctx) {
+                return `Cantidad: ${ctx.raw.v}`;
+              }
+            }
+          }
+        }
+      }
+    });
+
+    return () => chart.destroy();
+  }, [heatmapMatrix]);
+
   return (
-    <div style={{ padding: '16px' }}>
-      <h1 style={{ fontSize: '24px', marginBottom: '20px' }}>Dashboard</h1>
+    <div className="bigCaja">
+      <div className="titulo1">MIRADAL DASHBOARD</div>
+      
 
-      {/* Contenedor general para adaptar al tamaño de pantalla */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+      <div>
+        <div className="titulo2">
+          Heatmap de Percepción de Animales
+        </div>
+        <div className="heat">
+          <canvas id="heatmapCanvas" />
+        </div>
 
-        {/* Gráfico de Barras */}
-        <div style={{ width: '100%', height: 250, maxWidth: 500 }}>
-          <h2 style={{ fontSize: '18px' }}>Gráfico de Barras</h2>
+          <div className="titulo2">Percepción de Desechos</div>
+        <div>
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={data}>
+            <BarChart data={barDataBasura}>
               <XAxis dataKey="name" />
               <YAxis />
               <Tooltip />
-              <Bar dataKey="value" fill="#8884d8" />
+              <Legend />
+              <Bar dataKey="si" stackId="a" fill="#2d4b42" />
+              <Bar dataKey="no" stackId="a" fill="#36bbaa" />
             </BarChart>
           </ResponsiveContainer>
         </div>
-
-        {/* Gráfico de Línea */}
-        <div style={{ width: '100%', height: 250, maxWidth: 500 }}>
-          <h2 style={{ fontSize: '18px' }}>Gráfico de Línea</h2>
+        <div className="titulo2">
+          Percepción de Agua Turbia
+        </div>
+        <div >
+         
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={data}>
+            <BarChart data={barDataAgua}>
               <XAxis dataKey="name" />
               <YAxis />
               <Tooltip />
-              <Line type="monotone" dataKey="value" stroke="#82ca9d" />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
-
-        {/* Gráfico de Pastel */}
-        <div style={{ width: '100%', height: 250, maxWidth: 500 }}>
-          <h2 style={{ fontSize: '18px' }}>Gráfico de Pastel</h2>
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-              <Pie
-                data={pieData}
-                cx="50%"
-                cy="50%"
-                outerRadius={60}
-                label
-                dataKey="value"
-              >
-                {pieData.map((item, index) => (
-                  <Cell key={index} fill={colores[index % colores.length]} />
-                ))}
-              </Pie>
-              <Tooltip />
               <Legend />
-            </PieChart>
+              <Bar dataKey="si" stackId="b" fill="#2d4b42" />
+              <Bar dataKey="no" stackId="b" fill="#36bbaa" />
+            </BarChart>
           </ResponsiveContainer>
         </div>
-
+        
       </div>
     </div>
   );
 }
-//wandahoy
