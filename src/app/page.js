@@ -1,6 +1,6 @@
 'use client';
 import { useMemo, useState, useEffect } from "react";
-import {agruparPorSemana, contarRespuestasPorSemana } from "./utils/procesarRespuesta";
+import {contarRespuestasPorSemana } from "./utils/procesarRespuesta";
 import respuestasJson from "../../public/data/respuestas.json";
 //import apiClient from "../../lib/apiClient";
 
@@ -26,15 +26,17 @@ import { MatrixController, MatrixElement } from 'chartjs-chart-matrix';
 
 Chart.register(...registerables, MatrixController, MatrixElement);
 
-const animales = [
-  "percibe-aves", "percibe-peces", "percibe-ganado", "percibe-ranas", "percibe-insectos"
-];
 
 //const res = await apiClient.get('/respuestas');
 //const data = res.data;
 
 
 export default function Dashboard() {
+  const animales = [
+    "percibe-aves", "percibe-peces", "percibe-ganado", "percibe-ranas", "percibe-insectos"
+  ];
+
+
   const [mesActual, setMesActual] = useState(new Date());
   const [barDataBasura, setBarDataBasura] = useState([]);
   const [barDataAgua, setBarDataAgua] = useState([]);
@@ -254,7 +256,7 @@ export default function Dashboard() {
           </div>
         <div className="titulo2">
 
-          
+
           ¿Percibieron agua turbia?
         </div>
         <div className="chart-container">
