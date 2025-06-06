@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from "react";
+import { useMemo, useState, useEffect } from "react";
 import {agruparPorSemana, contarRespuestasPorSemana } from "./utils/procesarRespuesta";
 import respuestasJson from "../../public/data/respuestas.json";
 //import apiClient from "../../lib/apiClient";
@@ -39,6 +39,7 @@ export default function Dashboard() {
   const [barDataBasura, setBarDataBasura] = useState([]);
   const [barDataAgua, setBarDataAgua] = useState([]);
   const [heatmapMatrix, setHeatmapMatrix] = useState([]);
+  const [grafDataNombre, setGrafDataNombre] = useState([]);
 
   const cambiarMes = (delta) => {
   const nuevoMes = new Date(mesActual);
@@ -63,8 +64,10 @@ export default function Dashboard() {
     const basura = [];
     const agua = [];
     const heatmap = [];
+    const nombres = [];
 
     semanasFiltradas.forEach((semana, xIndex) => {
+      let siNombre = 0, noNombre = 0;
       let siBasura = 0, noBasura = 0;
       let siAgua = 0, noAgua = 0;
       const animalContadores = {
@@ -83,6 +86,9 @@ export default function Dashboard() {
           if (item === "percibe-agua-turbia") {
             respuesta === "si" ? siAgua++ : noAgua++;
           }
+          if (item === "conoce-nombre-humedal") {
+            respuesta === "si" ? siNombre++ : noNombre++;
+          }
           if (animales.includes(item) && respuesta === "si") {
             animalContadores[item]++;
           }
@@ -91,6 +97,7 @@ export default function Dashboard() {
 
       basura.push({ name: semana, si: siBasura, no: noBasura });
       agua.push({ name: semana, si: siAgua, no: noAgua });
+      nombres.push({ name: semana, si: siNombre, no: noNombre});
 
       animales.forEach((animal, yIndex) => {
         heatmap.push({
@@ -103,6 +110,7 @@ export default function Dashboard() {
 
     setBarDataBasura(basura);
     setBarDataAgua(agua);
+    setGrafDataNombre(nombres);
     setHeatmapMatrix(heatmap);
   }, [mesActual]);
 
@@ -169,6 +177,20 @@ export default function Dashboard() {
     return () => chart.destroy();
   }, [heatmapMatrix]);
 
+
+  //grafico de pastel datos
+  const pieData = useMemo(() => {
+    const totalSi = grafDataNombre.reduce((sum, item) => sum + item.si, 0);
+    const totalNo = grafDataNombre.reduce((sum, item) => sum + item.no, 0);
+
+    return [
+      { name: 'Sí', value: totalSi },
+      { name: 'No', value: totalNo }
+    ];
+  }, [grafDataNombre]);
+  const colors = ['#2f9e90', '#216b62'];
+  //end of grafico de pastel datos
+
   return (
     <div className="bigCaja">
       <div className="titulo1">MIRADAL DASHBOARD</div>
@@ -178,8 +200,28 @@ export default function Dashboard() {
         <button onClick={() => cambiarMes(1)}>➡️</button>
       </div>
       
+
       <div>
+        <div className="titulo2">¿Sabe Miraflores el nombre de su humedal?</div>
+          <div className="chart-container">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                data = {pieData}             
+                outerRadius={100}
+                >
+                {pieData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
+                ))}
+                </Pie>
+                <Tooltip />
+                <Legend />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
         <div className="titulo2">
+
+
           ¿Se percibieron Animales?
         </div>
         <div className="heatmap-wrapper">
@@ -194,6 +236,8 @@ export default function Dashboard() {
         </div>
 
         <div className="titulo2">
+
+
           ¿Se observó basura?
         </div>
           <div className="chart-container">
@@ -209,6 +253,8 @@ export default function Dashboard() {
             </ResponsiveContainer>
           </div>
         <div className="titulo2">
+
+          
           ¿Percibieron agua turbia?
         </div>
         <div className="chart-container">
