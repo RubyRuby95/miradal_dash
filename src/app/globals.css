@@ -29,6 +29,7 @@ div {
   width: 100%;
   text-align: center;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border-radius: 10px;
 }
 .titulo2{
   font-size: 20px;
@@ -73,8 +74,55 @@ div {
   }
 }
 
+.heatmap-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 12px;
+  overflow-x: auto;
+}
+
+.heatmap-labels {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 30px; /* para alinear con el gráfico */
+}
+
+.heatmap-label {
+  height: 40px; /* debe coincidir con el height del rectángulo del heatmap */
+  margin: 4px 0;
+  font-size: 14px;
+  text-align: right;
+  padding-right: 4px;
+  white-space: nowrap;
+}
+
+.heatmap-canvas-container {
+  width: 100%;
+  max-width: 600px;
+  overflow-x: auto;
+}
+
 canvas#heatmapCanvas {
   width: 100% !important;
-  max-width: 600px;
   height: 300px !important;
+}
+
+.mes-navegacion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  font-size: 20px;
+  margin: 20px;
+}
+.mes-navegacion button {
+  background: #36bbaa;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  font-size: 18px;
+  border-radius: 6px;
+  cursor: pointer;
 }

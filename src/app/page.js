@@ -35,20 +35,36 @@ const animales = [
 
 
 export default function Dashboard() {
+  const [mesActual, setMesActual] = useState(new Date());
   const [barDataBasura, setBarDataBasura] = useState([]);
   const [barDataAgua, setBarDataAgua] = useState([]);
   const [heatmapMatrix, setHeatmapMatrix] = useState([]);
 
+  const cambiarMes = (delta) => {
+  const nuevoMes = new Date(mesActual);
+  nuevoMes.setMonth(mesActual.getMonth() + delta);
+  setMesActual(nuevoMes);
+  };
+
   useEffect(() => {
-    //const porSemana = contarRespuestasPorSemana(respuestasJson);
+    //const porSemana = contarRespuestasPorSemana(data);
     const porSemana = contarRespuestasPorSemana(respuestasJson);
     const semanas = Object.keys(porSemana).sort();
+
+    // Filtra semanas del mes visible
+    const semanasFiltradas = semanas.filter(semana => {
+    const fecha = new Date(semana);
+    return (
+      fecha.getFullYear() === mesActual.getFullYear() &&
+      fecha.getMonth() === mesActual.getMonth()
+    );
+    });
 
     const basura = [];
     const agua = [];
     const heatmap = [];
 
-    semanas.forEach((semana, xIndex) => {
+    semanasFiltradas.forEach((semana, xIndex) => {
       let siBasura = 0, noBasura = 0;
       let siAgua = 0, noAgua = 0;
       const animalContadores = {
@@ -88,7 +104,7 @@ export default function Dashboard() {
     setBarDataBasura(basura);
     setBarDataAgua(agua);
     setHeatmapMatrix(heatmap);
-  }, []);
+  }, [mesActual]);
 
   useEffect(() => {
     const canvas = document.getElementById('heatmapCanvas');
@@ -122,8 +138,8 @@ export default function Dashboard() {
           x: {
             type: 'linear',
             min: -0.5,
-            max: 6.5,
-            ticks: { stepSize: 1 },
+            max: 5.5,
+            ticks: { stepSize: 1, display: false },
             grid: { display: false }
           },
           y: {
@@ -156,17 +172,30 @@ export default function Dashboard() {
   return (
     <div className="bigCaja">
       <div className="titulo1">MIRADAL DASHBOARD</div>
+      <div className="mes-navegacion">
+        <button onClick={() => cambiarMes(-1)}>⬅️</button>
+        <span>{mesActual.toLocaleString('es-ES', { month: 'long', year: 'numeric' }).toUpperCase()}</span>
+        <button onClick={() => cambiarMes(1)}>➡️</button>
+      </div>
       
-
       <div>
         <div className="titulo2">
-          Heatmap de Percepción de Animales
+          ¿Se percibieron Animales?
         </div>
-        <div className="heat">
-          <canvas id="heatmapCanvas" />
+        <div className="heatmap-wrapper">
+          <div className="heatmap-labels">
+            {['Aves', 'Ganado', 'Insectos', 'Peces', 'Ranas'].map((label, idx) => (
+              <div key={idx} className="heatmap-label">{label}</div>
+            ))}
+          </div>
+          <div className="heatmap-canvas-container">
+            <canvas id="heatmapCanvas" />
+          </div>
         </div>
 
-        <div className="titulo2">Percepción de Desechos</div>
+        <div className="titulo2">
+          ¿Se observó basura?
+        </div>
           <div className="chart-container">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={barDataBasura}>
@@ -180,7 +209,7 @@ export default function Dashboard() {
             </ResponsiveContainer>
           </div>
         <div className="titulo2">
-          Percepción de Agua Turbia
+          ¿Percibieron agua turbia?
         </div>
         <div className="chart-container">
             <ResponsiveContainer width="100%" height="100%">
