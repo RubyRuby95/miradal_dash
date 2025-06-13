@@ -2,7 +2,8 @@
 import { useMemo, useState, useEffect } from "react";
 import {contarRespuestasPorSemana } from "./utils/contarRespuestasPorSemana";
 import { getTop5 } from "./utils/getTop5";
-import { apiClient } from "../../lib/apiClient";
+import apiClient from "../../lib/apiClients";
+
 
 import {
   BarChart,
@@ -43,7 +44,6 @@ const fetchUsuarios = async () => {
         console.error("error al procesar datos:", error);
       }
 };
-
   //fin llamada a api
 
 
