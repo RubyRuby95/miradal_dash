@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-  //baseURL: 'https://servicio-api.vercel.app/api',
-  baseURL: 'https://servicio-api.vercel.app/api',
+  baseURL: 'https://miradal-api.vercel.app',
   headers: {
     'Content-Type': 'application/json'
   },

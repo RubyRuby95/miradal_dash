@@ -51,8 +51,9 @@ div {
 .chart-container {
   width: 100%;
   max-width: 600px;
-  height: 300px;
+  height: auto;
   margin: auto;
+
 }
 @media (max-width: 768px) {
   .titulo1 {
@@ -66,7 +67,7 @@ div {
 
   .chart-container {
     max-width: 100%;
-    height: 250px;
+    height: 300px;
   }
 
   .heat {
@@ -104,10 +105,6 @@ div {
   overflow-x: auto;
 }
 
-canvas#heatmapCanvas {
-  width: 100% !important;
-  height: 300px !important;
-}
 
 .mes-navegacion {
   display: flex;
@@ -126,3 +123,4 @@ canvas#heatmapCanvas {
   border-radius: 6px;
   cursor: pointer;
 }
+
