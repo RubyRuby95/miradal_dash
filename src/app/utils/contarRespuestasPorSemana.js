@@ -1,12 +1,13 @@
-import { parseISO, startOfWeek, format } from "date-fns";
+import { parseISO, getWeek, getYear } from "date-fns";
 
-//cuenta respuestas por semana
 export function contarRespuestasPorSemana(listarespuestas) {
   const agrupado = {};
+
   listarespuestas.forEach(({ timestamp, respuestas }) => {
     const fecha = parseISO(timestamp);
-    const inicioSemana = startOfWeek(fecha, { weekStartsOn: 1 });
-    const clave = format(inicioSemana, 'yyyy-MM-dd');
+    const semana = getWeek(fecha, { weekStartsOn: 1 });
+    const año = getYear(fecha);
+    const clave = `${año}-S${semana}`;
 
     if (!agrupado[clave]) agrupado[clave] = [];
 

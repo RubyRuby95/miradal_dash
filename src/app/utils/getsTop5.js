@@ -3,7 +3,7 @@ export function getTop5(data) {
 
   data.forEach((entrada) => {
     const nombreItem = entrada.respuestas.find(
-      (r) => r.item === "nombre-humedal-preproc"
+      (r) => r.item === "nombre-humedal"
     );
 
     if (nombreItem && nombreItem.respuesta.trim() !== "") {
