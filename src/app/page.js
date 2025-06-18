@@ -29,7 +29,8 @@ export default function DashboardPage() {
   useEffect(() => {
     const fetchRespuestas = async () => {
       try {
-        const res = await fetch('./data/respuestas.json');
+        //const res = await fetch('./data/respuestas.json');
+        const res = await apiClient.get("/obtenerRespuestas");
         const json = await res.json();
         setData(json);
         console.log('Datos recibidos:', json);

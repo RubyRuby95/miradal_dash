@@ -14,6 +14,13 @@ export default function HeatmapAnimales({ data, semanasLabels, animales }) {
   useEffect(() => {
     if (!Array.isArray(data) || data.length === 0) return;
 
+    const canvas = canvasRef.current;
+    // Asegurar que el canvas tenga tamaño del contenedor
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+//////
+
+
     const ctx = canvasRef.current.getContext('2d');
 
     if (window.heatmapChartInstance) {
@@ -32,13 +39,23 @@ export default function HeatmapAnimales({ data, semanasLabels, animales }) {
             const value = raw.v;
             const row = raw.y;
             const maxValRow = Math.max(...data.filter(d => d.y === row).map(d => d.v));
+            //la escala de color es individual para cada fila/animal
             const alpha = maxValRow > 0 ? value / maxValRow : 0;
             return `rgba(63, 81, 181, ${alpha})`;
           },
           borderColor: 'white',
-          borderWidth: 1,
-          width: () => 20,
-          height: () => 20,
+          // width/height dinámicos según chartArea:
+          width: ({ chart }) => {
+            const area = chart.chartArea;
+            if (!area) return 20;
+            // resto de columnas: 
+            return Math.max((area.width - 0) / semanasLabels.length - 2, 10);
+          },
+          height: ({ chart }) => {
+            const area = chart.chartArea;
+            if (!area) return 20;
+            return Math.max((area.height - 0) / animales.length - 2, 10);
+          },
         }]
       },
       options: {
@@ -74,6 +91,17 @@ export default function HeatmapAnimales({ data, semanasLabels, animales }) {
         }
       }
     });
+
+    //cleanup
+    
+    return () => {
+      if (window.heatmapChartInstance) {
+        window.heatmapChartInstance.destroy();
+        delete window.heatmapChartInstance;
+      }
+    };
+
+    //////
   }, [data, semanasLabels]);
 
   if (!data || data.length === 0) {
@@ -85,9 +113,11 @@ export default function HeatmapAnimales({ data, semanasLabels, animales }) {
   }
 
   return (
-    <div>
-      <h3 style={{ textAlign: 'center' }}>Animales vs Semanas</h3>
-      <canvas ref={canvasRef} />
+    <div style={{ width: '40%', height: '70%', display: 'flex', flexDirection: 'column' }}>
+      <h3 style={{ textAlign: 'center', margin: '0.5rem 0' }}>¿Se percibieron Animales?</h3>
+      <div style={{ flex: 1, position: 'relative' }}>
+        <canvas ref={canvasRef} />
+      </div>
     </div>
   );
 }
