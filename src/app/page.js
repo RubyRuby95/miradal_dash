@@ -3,6 +3,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import Image from 'next/image';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, ArcElement, BarElement } from 'chart.js';
+import { getWeek, getYear } from "date-fns";
 
 import apiClient from "../../lib/apiClients";
 import TarjetaGiratoria from "./components/TarjetaGiratoria";
@@ -26,7 +27,7 @@ export default function DashboardPage() {
   const [bloqueIndex, setBloqueIndex] = useState(0);
 
   // Cargar datos
-  useEffect(() => {
+ useEffect(() => {
     const fetchRespuestas = async () => {
       try {
         //const res = await fetch('./data/respuestas.json');
@@ -34,6 +35,32 @@ export default function DashboardPage() {
         const json = await res.json();
         setData(json);
         console.log('Datos recibidos:', json);
+
+        // Calcular semana actual
+        const hoy = new Date();
+        const semanaActual = getWeek(hoy, { weekStartsOn: 1 });
+        const añoActual = getYear(hoy);
+        const claveActual = `${añoActual}-S${semanaActual}`;
+
+        const respuestasSemanaTemp = contarRespuestasPorSemana(json);
+
+        // Completar semanas faltantes
+        const años = [...new Set(Object.keys(respuestasSemanaTemp).map(k => k.split('-S')[0]))];
+        años.forEach(año => {
+          for (let i = 1; i <= 52; i++) {
+            const clave = `${año}-S${i}`;
+            if (!respuestasSemanaTemp[clave]) respuestasSemanaTemp[clave] = [];
+          }
+        });
+
+        // Calcular bloques y buscar índice del actual
+        const bloquesTemp = agruparSemanasPorBloques(respuestasSemanaTemp, 4);
+        const indexBloqueActual = bloquesTemp.findIndex(b => b.includes(claveActual));
+
+        if (indexBloqueActual !== -1) {
+          setBloqueIndex(indexBloqueActual);
+        }
+
       } catch (error) {
         console.error('Error al procesar datos:', error);
       }
@@ -41,7 +68,7 @@ export default function DashboardPage() {
     fetchRespuestas();
   }, []);
 
-  // Hooks derivados
+  
   const respuestasSemana = useMemo(() => {
     if (!data) return {};
     const agrupadas = contarRespuestasPorSemana(data);
@@ -65,6 +92,37 @@ export default function DashboardPage() {
   //console.log('bloques', bloques);
 
   const semanas = bloques[bloqueIndex] || [];
+  const rangoSemanas = useMemo(() => {
+    if (semanas.length === 0) return '';
+
+    const semanasSeparadas = semanas.map(s => {
+      const [año, semana] = s.split('-S');
+      return { año: parseInt(año), semana: parseInt(semana) };
+    }).filter(({ año, semana }) => !isNaN(año) && !isNaN(semana));
+
+    const años = [...new Set(semanasSeparadas.map(s => s.año))].sort();
+    const semanasNumeros = semanasSeparadas.map(s => s.semana);
+
+    const añoTexto = años.length === 1
+      ? `${años[0]}`
+      : `${años[0]}–${años[años.length - 1]}`;
+
+    const minSemana = Math.min(...semanasNumeros);
+    const maxSemana = Math.max(...semanasNumeros);
+
+    let semanasTexto = '';
+    // Si hay semanas no consecutivas como 52,1,2,3... las mostramos completas
+    if (semanasNumeros.length > 0) {
+      const ordenadas = [...new Set(semanasNumeros)].sort((a, b) => a - b);
+      if (ordenadas[0] === minSemana && ordenadas[ordenadas.length - 1] === maxSemana && ordenadas.length === (maxSemana - minSemana + 1)) {
+        semanasTexto = `Semanas ${minSemana}–${maxSemana}`;
+      } else {
+        semanasTexto = `Semanas ${ordenadas.join(', ')}`;
+      }
+    }
+
+    return `${añoTexto} - ${semanasTexto}`;
+  }, [semanas]);
   //console.log('semanas', semanas);
   const respuestasBloque = semanas
     .flatMap((s) => respuestasSemana[s] || [])
@@ -110,10 +168,23 @@ export default function DashboardPage() {
   const nombresSiNo = countSiNo(data, 'conoce-nombre-humedal');
   //console.log('datos de nombres', nombresSiNo);
 
-  const basuraData = countSiNo(respuestasBloque, 'percibe-desechos');
-  //console.log('datos basura', basuraData);
-  const aguaData = countSiNo(respuestasBloque, 'percibe-agua-turbia');
-  //console.log('datos agua', aguaData);
+  const basuraPorSemana = semanas.map(semana => {
+    const respuestas = (respuestasSemana[semana] || []).flat();
+    return {
+      semana,
+      data: countSiNo(respuestas, 'percibe-desechos')
+    };
+  });
+  //console.log('datos basura', basuraPorSemana);
+  const aguaPorSemana = semanas.map(semana => {
+    const respuestas = (respuestasSemana[semana] || []).flat();
+    return {
+      semana,
+      data: countSiNo(respuestas, 'percibe-agua-turbia')
+    };
+  });
+    //console.log('datos agua', aguaPorSemana);
+
   const oloresData = countNivel(respuestasBloque, 'huele', ['1', '2', '3']);
   //console.log('datos olores', oloresData);
 
@@ -155,16 +226,22 @@ export default function DashboardPage() {
                     <TarjetaGiratoria
                         infoAdicional="El 80% de los encuestados no conoce el nombre del humedal. Haz clic para ver el grafico."
                     >
-                      <GraficoNombres data={nombresSiNo} />
-                      <GraficoTop5 data={top5} />
+                       <div className="nombres-y-top5">
+                          <div className="grafico-nombres">
+                            <GraficoNombres data={nombresSiNo} />
+                          </div>
+                          <div className="tabla-top5">
+                            <GraficoTop5 data={top5} />
+                          </div>
+                        </div>
                     </TarjetaGiratoria>
                     </div>
                 
                     {/*Heatmap*/}
-                    <div className='bloque-nav'style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '8px', gap: '8px' }} >
-                        <button onClick={() => setBloqueIndex(i => Math.max(i-1, 0))} disabled={bloqueIndex === 0}>⬅️</button>
-                         Bloque {bloqueIndex+1}/{bloques.length}
-                        <button onClick={() => setBloqueIndex(i => Math.min(i+1, bloques.length-1))} disabled={bloqueIndex >= bloques.length-1}>➡️</button>
+                    <div className='bloque-nav' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '8px', gap: '8px' }} >
+                      <button onClick={() => setBloqueIndex(i => Math.max(i-1, 0))} disabled={bloqueIndex === 0}>⬅️</button>
+                      ({rangoSemanas}) 
+                      <button onClick={() => setBloqueIndex(i => Math.min(i+1, bloques.length-1))} disabled={bloqueIndex >= bloques.length-1}>➡️</button>
                     </div>
                     <div className="dashboard-card">
                     <TarjetaGiratoria
@@ -175,38 +252,38 @@ export default function DashboardPage() {
                     </div>
 
                     {/*Grafico de Basura*/}
-                    <div className='bloque-nav'style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '8px', gap: '8px' }} >
-                        <button onClick={() => setBloqueIndex(i => Math.max(i-1, 0))} disabled={bloqueIndex === 0}>⬅️</button>
-                         Bloque {bloqueIndex+1}/{bloques.length}
-                        <button onClick={() => setBloqueIndex(i => Math.min(i+1, bloques.length-1))} disabled={bloqueIndex >= bloques.length-1}>➡️</button>
+                    <div className='bloque-nav' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '8px', gap: '8px' }} >
+                      <button onClick={() => setBloqueIndex(i => Math.max(i-1, 0))} disabled={bloqueIndex === 0}>⬅️</button>
+                      ({rangoSemanas}) 
+                      <button onClick={() => setBloqueIndex(i => Math.min(i+1, bloques.length-1))} disabled={bloqueIndex >= bloques.length-1}>➡️</button>
                     </div>
                     <div className="dashboard-card">
                     <TarjetaGiratoria
                         infoAdicional="La presencia de basura es perjudicial para el ecosistema. Haz clic para ver los reportes."
                     >
-                      <GraficoBasura data={basuraData} />
+                      <GraficoBasura dataPorSemana={basuraPorSemana} />
                     </TarjetaGiratoria>
                     </div>
 
                     {/*Grafico de Agua Turbia*/}
-                    <div className='bloque-nav'style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '8px', gap: '8px' }} >
-                        <button onClick={() => setBloqueIndex(i => Math.max(i-1, 0))} disabled={bloqueIndex === 0}>⬅️</button>
-                         Bloque {bloqueIndex+1}/{bloques.length}
-                        <button onClick={() => setBloqueIndex(i => Math.min(i+1, bloques.length-1))} disabled={bloqueIndex >= bloques.length-1}>➡️</button>
+                    <div className='bloque-nav' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '8px', gap: '8px' }} >
+                      <button onClick={() => setBloqueIndex(i => Math.max(i-1, 0))} disabled={bloqueIndex === 0}>⬅️</button>
+                      ({rangoSemanas}) 
+                      <button onClick={() => setBloqueIndex(i => Math.min(i+1, bloques.length-1))} disabled={bloqueIndex >= bloques.length-1}>➡️</button>
                     </div>
                     <div className="dashboard-card">
                     <TarjetaGiratoria 
                         infoAdicional="La turbidez del agua es un indicador clave de la salud del humedal. Haz clic para ver los datos."
                     >
-                      <GraficoAguaTurbia data={aguaData} />
+                      <GraficoAguaTurbia dataPorSemana={aguaPorSemana} />
                     </TarjetaGiratoria>
                     </div>
 
                     {/*Grafico de Olor*/}
-                    <div className='bloque-nav'style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '8px', gap: '8px' }} >
-                        <button onClick={() => setBloqueIndex(i => Math.max(i-1, 0))} disabled={bloqueIndex === 0}>⬅️</button>
-                         Bloque {bloqueIndex+1}/{bloques.length}
-                        <button onClick={() => setBloqueIndex(i => Math.min(i+1, bloques.length-1))} disabled={bloqueIndex >= bloques.length-1}>➡️</button>
+                    <div className='bloque-nav' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '8px', gap: '8px' }} >
+                      <button onClick={() => setBloqueIndex(i => Math.max(i-1, 0))} disabled={bloqueIndex === 0}>⬅️</button>
+                      ({rangoSemanas}) 
+                      <button onClick={() => setBloqueIndex(i => Math.min(i+1, bloques.length-1))} disabled={bloqueIndex >= bloques.length-1}>➡️</button>
                     </div>
                     <div className="dashboard-card">
                     <TarjetaGiratoria

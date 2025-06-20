@@ -113,7 +113,9 @@ export default function HeatmapAnimales({ data, semanasLabels, animales }) {
   }
 
   return (
-    <div style={{ width: '40%', height: '70%', display: 'flex', flexDirection: 'column' }}>
+    <div
+      className="heatmap-responsive-wrapper"
+    >
       <h3 style={{ textAlign: 'center', margin: '0.5rem 0' }}>¿Se percibieron Animales?</h3>
       <div style={{ flex: 1, position: 'relative' }}>
         <canvas ref={canvasRef} />

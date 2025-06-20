@@ -2,20 +2,26 @@
 export function countSiNo(respsBloque, itemKey) {
   const tallies = (respsBloque || []).reduce((acc, entry) => {
     let arr;
+
     if (Array.isArray(entry)) {
       // viene como bloque: cada entry es Array de {item, respuesta}
       arr = entry;
     } else if (entry && Array.isArray(entry.respuestas)) {
       // viene como data global: entry.respuestas es el array
       arr = entry.respuestas;
+    } else if (entry && entry.item && entry.respuesta) {
+      // viene como respuesta individual ya aplanada
+      arr = [entry];
     } else {
       return acc;
     }
+
     const r = arr.find(r => r.item === itemKey);
     if (!r) return acc;
     r.respuesta === 'si' ? acc.si++ : acc.no++;
     return acc;
   }, { si: 0, no: 0 });
+
   return [
     { name: 'Sí', value: tallies.si },
     { name: 'No', value: tallies.no },
