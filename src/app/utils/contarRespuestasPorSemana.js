@@ -1,10 +1,5 @@
 import { parseISO, getWeek, getYear } from "date-fns";
 
-/**
- * Agrupa respuestas por semana (`YYYY-S{n}`), ignorando entradas sin timestamp válido.
- * @param {Array} listarespuestas - Lista de objetos con `timestamp` y `respuestas`
- * @returns {Object} - Objeto agrupado por clave `año-Semana`
- */
 export function contarRespuestasPorSemana(listarespuestas) {
   const agrupado = {};
 
