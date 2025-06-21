@@ -30,11 +30,18 @@ export default function DashboardPage() {
  useEffect(() => {
     const fetchRespuestas = async () => {
       try {
+        //*USO DE JSON LOCAL DE PRUEBA */
         //const res = await fetch('./data/respuestas.json');
+        //const json= res.json();
+        /*fin*/
+
+        /*LLAMADA A API */
         const res = await apiClient.get("/obtenerRespuestas");
-        const json = await res.json();
+        const json = res.data;
+        
+        console.log('lo q llega de api', json);
+
         setData(json);
-        console.log('Datos recibidos:', json);
 
         // Calcular semana actual
         const hoy = new Date();
