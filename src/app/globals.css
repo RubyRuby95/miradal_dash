@@ -250,3 +250,48 @@ main.main-container {
     width: 70%;
   }
 }
+
+/*¨
+  comentario caja try 1
+*/
+
+.dashboard-card-amplia {
+  width: 100%;
+  min-height: 300px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  padding: 1.5rem;
+}
+
+.comentarios-container {
+  padding: 1rem;
+  background: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.comentarios-lista {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.comentario-item {
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.comentario-texto {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.comentario-fecha {
+  font-size: 0.8rem;
+  color: gray;
+}

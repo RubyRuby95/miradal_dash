@@ -1,5 +1,6 @@
 export function getTop5(data) {
   const conteo = {};
+  console.log('the data', data);
 
   data.forEach((entrada) => {
     const nombreItem = entrada.respuestas.find(

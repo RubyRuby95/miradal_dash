@@ -19,6 +19,12 @@ import GraficoTop5 from './components/graficoTop5';
 import GraficoOlores from './components/graficoOlores';
 import HeatmapAnimales from './components/heatmapAnimales';
 
+//intento de caja de comentarios:
+import CajaComentarios from './components/cajaComentarios';
+import { extraerComentarios } from './utils/extraerComentarios';
+
+//intento caja comentarios end
+
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, ArcElement, BarElement);
 
 
@@ -32,14 +38,14 @@ export default function DashboardPage() {
       try {
         //*USO DE JSON LOCAL DE PRUEBA */
         //const res = await fetch('./data/respuestas.json');
-        //const json= res.json();
+        //const json= await res.json();
         /*fin*/
 
         /*LLAMADA A API */
-        const res = await apiClient.get("/obtenerRespuestas");
-        const json = res.data;
-        
+        const res = await apiClient.get("/api/encuesta/test-id-001");
+        const json = await res.data;
         console.log('lo q llega de api', json);
+        /*fin*/
 
         setData(json);
 
@@ -297,8 +303,13 @@ export default function DashboardPage() {
                         infoAdicional="Percepción de mal olor registrada durante la semana. Haz clic para ver los detalles."
                     >
                       <GraficoOlores data={oloresData} />
-                    </TarjetaGiratoria>
+                      </TarjetaGiratoria>
                     </div>
+
+                    
+                  <div className="dashboard-card-amplia">
+                    <CajaComentarios comentarios={extraerComentarios(data)} />
+                  </div>
                 </div>
             </div>
         </div>
