@@ -42,7 +42,7 @@ export default function DashboardPage() {
         /*fin*/
 
         /*LLAMADA A API */
-        const res = await apiClient.get("/api/encuesta/test-id-001");
+        const res = await apiClient.get("/api/encuesta");
         const json = await res.data;
         console.log('lo q llega de api', json);
         /*fin*/
