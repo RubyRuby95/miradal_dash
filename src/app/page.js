@@ -10,7 +10,7 @@ import TarjetaGiratoria from "./components/TarjetaGiratoria";
 import { contarRespuestasPorSemana } from "./utils/contarRespuestasPorSemana";
 import { agruparSemanasPorBloques } from "./utils/agruparSemanasPorBloque";
 import { getTop5 } from "./utils/getsTop5";
-import { countSiNo, countNivel } from "./utils/contadores";
+import { countSiNo, countNivel, esRespuestaValida } from "./utils/contadores";
 
 import GraficoNombres from './components/graficoNombres';
 import GraficoBasura from './components/graficoBasura';
@@ -157,9 +157,8 @@ export default function DashboardPage() {
 
         // Filtrar por coincidencias del animal con respuesta "si"
         const total = respuestas.filter(r =>
-          r.item === animal && r.respuesta === 'si'
+          esRespuestaValida(r) && r.item === animal && r.respuesta === 'si'
         ).length;
-
         celdas.push({
           x: xIndex,
           y: yIndex,

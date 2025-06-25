@@ -1,8 +1,10 @@
 export function getTop5(data) {
   const conteo = {};
-  console.log('the data', data);
+  //console.log('the data', data);
 
   data.forEach((entrada) => {
+   if (!entrada?.respuestas) return; // <-- if de item name, cambiar dependiendo el item
+
     const nombreItem = entrada.respuestas.find(
       (r) => r.item === "nombre-humedal"
     );

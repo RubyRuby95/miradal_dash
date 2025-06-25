@@ -45,3 +45,8 @@ export function countNivel(respsBloque, itemKey, niveles) {
 
   return niveles.map(n => ({ name: n, value: tally[n] }));
 }
+
+
+export function esRespuestaValida(r) {
+  return r && typeof r === 'object' && 'item' in r && 'respuesta' in r;
+}
