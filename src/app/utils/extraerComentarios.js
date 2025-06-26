@@ -3,11 +3,15 @@ import { parseISO, format } from "date-fns";
 export function extraerComentarios(listarespuestas) {
   return listarespuestas
     .map(r => {
-      if (!r?.respuestas) return; // <-- evitamos errores
+      if (!r?.respuestas) return; 
 
       const comentarioObj = r.respuestas.find(item => item.item === "comentario");
-      const fechaOriginal = r.timestamp ?? r.created_at ?? null;
+      if (!comentarioObj || typeof comentarioObj.respuesta !== 'string') return;
 
+      const textoLimpio = comentarioObj.respuesta.trim();
+      if (textoLimpio === '') return;
+
+      const fechaOriginal = r.timestamp ?? r.created_at ?? null;
       let fechaFormateada = null;
       if (fechaOriginal) {
         try {
@@ -21,5 +25,5 @@ export function extraerComentarios(listarespuestas) {
       
       return comentarioObj ? { texto: comentarioObj.respuesta, timestamp: fechaFormateada } : null;
     })
-    .filter(Boolean); // Elimina los nulos
+    .filter(Boolean);
 }

@@ -13,7 +13,7 @@ export default function GraficoTop5({ data }) {
 
   return (
     <div>
-      <h3 style={{ textAlign: 'center' }}>Top 5 Animales más mencionados</h3>
+      <h3 style={{ textAlign: 'center' }}>Top 5 Nombres más mencionados</h3>
       <ul style={{ listStyle: 'none', padding: 0, textAlign: 'center' }}>
         {data.map((item, index) => (
           <li key={index}>
