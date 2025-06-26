@@ -41,13 +41,42 @@ export default function DashboardPage() {
         //const json= await res.json();
         /*fin*/
 
-        /*LLAMADA A API */
-        const res = await apiClient.get("/api/encuesta");
-        const json = await res.data;
-        console.log('lo q llega de api', json);
+        /*LLAMADA A API (ANTIGUA) */
+        //const res = await apiClient.get("/api/encuesta");
+        //const json = await res.data;
+        //console.log('lo q llega de api', json);
         /*fin*/
+      
+      //  setData(json);
 
-        setData(json);
+
+      /*SUPER LLAMADA A API */
+      const res = await apiClient.get("/api/encuesta");
+      const listaBase = res.data; 
+
+      //Obtener todas las respuestas usando los id
+      const respuestasCompletas = await Promise.all(
+        listaBase.map(async (entrada) => {
+          try {
+            const detalle = await apiClient.get(`/api/encuesta/${entrada.id}`);
+            return {
+              id: entrada.id,
+              timestamp: entrada.created_at,
+              respuestas: detalle.data //  esto debe ser el array de {item, respuesta}
+            };
+          } catch (error) {
+            console.warn(`Error cargando detalle de ${entrada.id}:`, error);
+            return null; 
+          }
+        })
+      );
+
+      // Filtrar los que vinieron nulos por error
+      const respuestasFiltradas = respuestasCompletas.filter(Boolean);
+
+      setData(respuestasFiltradas);
+
+      /*FIN SUPER LLAMADA A API*/
 
         // Calcular semana actual
         const hoy = new Date();
@@ -55,7 +84,7 @@ export default function DashboardPage() {
         const añoActual = getYear(hoy);
         const claveActual = `${añoActual}-S${semanaActual}`;
 
-        const respuestasSemanaTemp = contarRespuestasPorSemana(json);
+        const respuestasSemanaTemp = contarRespuestasPorSemana(respuestasFiltradas);
 
         // Completar semanas faltantes
         const años = [...new Set(Object.keys(respuestasSemanaTemp).map(k => k.split('-S')[0]))];

@@ -4,7 +4,13 @@ import { Pie } from 'react-chartjs-2';
 
 export default function GraficoOlores({ data }) {
   const pieData = useMemo(() => {
-    const labels = data.map(item => item.name);
+    const labelMap = {
+      '1': 'No huele',
+      '2': 'Hay olores, pero no son molestos',
+      '3': 'Hay olores desagradables'
+    };
+
+    const labels = data.map(item => labelMap[item.name] || item.name);
     const values = data.map(item => item.value);
     const total = values.reduce((sum, val) => sum + val, 0);
 
@@ -34,8 +40,8 @@ export default function GraficoOlores({ data }) {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      legend: { position: 'top' },
-      title: { display: true, text: 'Percepción de Olores (1: Bajo, 3: Alto)' }
+      legend: { position: 'bottom' },
+      title: { display: true, text: 'Percepción de Olores' }
     }
   };
 
