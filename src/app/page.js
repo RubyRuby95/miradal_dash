@@ -333,12 +333,8 @@ export default function DashboardPage() {
                       <GraficoOlores data={oloresData} />
                       </TarjetaGiratoria>
                     </div>
-
-                    
-                  <div className="dashboard-card-amplia">
-                    <CajaComentarios comentarios={extraerComentarios(data)} />
-                  </div>
                 </div>
+                <CajaComentarios comentarios={extraerComentarios(data)} />
             </div>
         </div>
     </main>

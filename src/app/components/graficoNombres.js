@@ -40,7 +40,7 @@ export default function GraficoNombres({ data }) {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      legend: { position: 'top' },
+      legend: { position: 'bottom' },
       title: {
         display: true,
         text: total === 0 ? 'No hay datos de nombres' : '¿Conoce el nombre del humedal?'
@@ -49,7 +49,7 @@ export default function GraficoNombres({ data }) {
   };
 
   return (
-    <div style={{ width: '50%', height: '50%' }}>
+    <div style={{ width: '80%', height: '80%' }}>
       <Pie data={pieData} options={options} />
     </div>
   );
