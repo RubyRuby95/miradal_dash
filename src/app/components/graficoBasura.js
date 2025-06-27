@@ -35,8 +35,8 @@ export default function GraficoBasura({ dataPorSemana }) {
   const chartData = {
     labels,
     datasets: [
-      { label: 'Sí', data: siData, backgroundColor: '#343a40' },
-      { label: 'No', data: noData, backgroundColor: '#56B4A9' },
+      { label: 'Sí', data: siData, backgroundColor: '#0f2a19' },
+      { label: 'No', data: noData, backgroundColor: '#004b28' },
     ]
   };
 

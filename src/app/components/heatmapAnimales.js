@@ -41,7 +41,7 @@ export default function HeatmapAnimales({ data, semanasLabels, animales }) {
             const maxValRow = Math.max(...data.filter(d => d.y === row).map(d => d.v));
             //la escala de color es individual para cada fila/animal
             const alpha = maxValRow > 0 ? value / maxValRow : 0;
-            return `rgba(63, 81, 181, ${alpha})`;
+            return `rgba(0, 75, 9, ${alpha})`;
           },
           borderColor: 'white',
           // width/height dinámicos según chartArea:

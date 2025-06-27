@@ -1,6 +1,6 @@
 /*Estilos Generales y de Layout*/
 body {
-  background: #f9fafb;
+  background: #c5e1d5;
   font-family: Arial, Helvetica, sans-serif;
   margin: 0;
   padding: 0;
@@ -15,7 +15,7 @@ main.main-container {
 .main-card-wrapper {
   max-width: 800px;
   margin: 0 auto; /*Centra la tarjeta principal en la pagina*/
-  background: white;
+  background: #c5e1d5;
   border-radius: 16px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   overflow: hidden; /*Mantiene los bordes redondeados del encabezado*/
@@ -24,7 +24,7 @@ main.main-container {
 /*Encabezado del Dashboard*/
 .section-header-main {
   background-color: #009688;
-  color: white;
+  color: #c5e1d5;
   padding: 1rem 1.5rem;
   display: flex;
   justify-content: space-between;
@@ -53,10 +53,10 @@ main.main-container {
 
 /*Estilo para la tarjeta estatica de introduccion*/
 .dashboard-card-static {
-  background-color: #e9f5f3;
+  background-color: #e4f6f9;
   border-radius: 12px;
   padding: 1.5rem;
-  border: 1px solid #d0e0dd;
+  border: 1px solid #004b28;
 }
 
 .dashboard-card-static .chart-title {
@@ -75,6 +75,7 @@ main.main-container {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  
 }
 
 /*Estilo de la tarjeta individual*/
@@ -82,8 +83,9 @@ main.main-container {
   width: 100%;
   height: 520px;
   perspective: 1000px;
-  background-color: white;
+  background-color: #e4f6f9;
   border-radius: 12px;
+  border: 1px solid #004b28;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
@@ -131,7 +133,7 @@ main.main-container {
 }
 
 .flip-front {
-  background-color: #f8f9fa;
+  background-color: #e4f6f9;
   font-size: 1.2rem;
   color: #343a40;
 }
@@ -144,7 +146,7 @@ main.main-container {
 }
 
 .flip-back {
-  background-color: #ffffff;
+  background-color: #e4f6f9;
   transform: rotateY(180deg);
 }
 
@@ -160,7 +162,7 @@ main.main-container {
 
 /*Boton para voltear la tarjeta*/
 .flip-button {
-  background-color: #56B4A9;
+  background-color: #007724;
   color: white;
   border: none;
   padding: 0.5rem 1.5rem;
@@ -171,10 +173,18 @@ main.main-container {
   transition: background-color 0.2s ease;
   flex-shrink: 0;
   margin-top: 1rem;
+  
+}
+/* Botones alineados horizontalmente con separación */
+.botones-container {
+  display: flex;
+  gap: 15px;
+  margin-top: 1rem;
+  justify-content: center;
 }
 
 .flip-button:hover {
-  background-color: #348a7d;
+  background-color: #00621d;
 }
 /*FIN ESTILOS TARJETA GIRATORIA*/
 
@@ -205,7 +215,7 @@ main.main-container {
 .heatmap-cell {
   width: 100%;
   aspect-ratio: 1 / 1;
-  background-color: #e9ecef;
+  background-color: #e4f6f9;
   border-radius: 2px;
 }
 
@@ -258,16 +268,18 @@ main.main-container {
 .dashboard-card-amplia {
   width: 100%;
   min-height: 300px;
-  background-color: white;
+  background-color: #c5e1d5;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  padding: 1.5rem;
 }
 
 .comentarios-container {
   padding: 1rem;
-  background: #f9f9f9;
+  background: #e4f6f9;
   border-radius: 12px;
+  border: 1px solid #004b28;
   box-shadow: 0 0 8px rgba(0,0,0,0.1);
   max-height: 300px;
   overflow-y: auto;
@@ -282,7 +294,7 @@ main.main-container {
 .comentario-item {
   margin-bottom: 1rem;
   padding: 0.5rem;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #333;
 }
 
 .comentario-texto {
@@ -293,4 +305,63 @@ main.main-container {
 .comentario-fecha {
   font-size: 0.8rem;
   color: gray;
+}
+
+/*Para mostrar las fotos
+
+/* Galería modal */
+.galeria-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.galeria-contenido {
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+}
+
+.galeria-img {
+  max-width: 100%;
+  max-height: 80vh;
+  border-radius: 10px;
+}
+
+.galeria-flecha {
+  margin: 10px;
+  font-size: 24px;
+  background: transparent;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.galeria-cerrar {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: white;
+  color: black;
+  border: none;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px 10px;
+}
+
+/* Estilos para la galería de fotos */
+.galeria-img {
+  width: 100%; /* La imagen ocupará todo el ancho del contenedor */
+  height: 400px; /* Define una altura fija para todas las imágenes. Puedes ajustar este valor */
+  object-fit: cover; /* ¡Esta es la propiedad mágica! */
+  object-position: center; /* Centra la imagen dentro del marco */
+  border-radius: 8px; /* Opcional: añade bordes redondeados para un look más suave */
 }

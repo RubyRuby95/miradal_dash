@@ -25,7 +25,7 @@ export default function GraficoNombres({ data }) {
       labels: ['Sí', 'No'],
       datasets: [{
         data: [totalSi, totalNo],
-        backgroundColor: ['#2f9e90', '#216b62'],
+        backgroundColor: ['#004b28', '#0f2a19'],
         borderColor: ['#fff', '#fff'],
         borderWidth: 2
       }]

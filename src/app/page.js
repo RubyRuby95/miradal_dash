@@ -37,8 +37,11 @@ export default function DashboardPage() {
     const fetchRespuestas = async () => {
       try {
         //*USO DE JSON LOCAL DE PRUEBA */
-        //const res = await fetch('./data/respuestas.json');
-        //const json= await res.json();
+        
+        const res = await fetch('./data/respuestas.json');
+        const json= await res.json();
+        setData(json);
+        
         /*fin*/
 
         /*LLAMADA A API (ANTIGUA) */
@@ -51,14 +54,15 @@ export default function DashboardPage() {
 
 
       /*SUPER LLAMADA A API */
-      const res = await apiClient.get("/api/encuesta");
+      /*
+      const res = await apiClient.get("/api/obtenerRespuestas");
       const listaBase = res.data; 
 
       //Obtener todas las respuestas usando los id
       const respuestasCompletas = await Promise.all(
         listaBase.map(async (entrada) => {
           try {
-            const detalle = await apiClient.get(`/api/encuesta/${entrada.id}`);
+            const detalle = await apiClient.get(`/api/obtenerRespuestas/${entrada.id}`);
             return {
               id: entrada.id,
               timestamp: entrada.created_at,
@@ -75,7 +79,7 @@ export default function DashboardPage() {
       const respuestasFiltradas = respuestasCompletas.filter(Boolean);
 
       setData(respuestasFiltradas);
-
+*/
       /*FIN SUPER LLAMADA A API*/
 
         // Calcular semana actual
@@ -84,7 +88,7 @@ export default function DashboardPage() {
         const añoActual = getYear(hoy);
         const claveActual = `${añoActual}-S${semanaActual}`;
 
-        const respuestasSemanaTemp = contarRespuestasPorSemana(respuestasFiltradas);
+        const respuestasSemanaTemp = contarRespuestasPorSemana(json); //!!!!
 
         // Completar semanas faltantes
         const años = [...new Set(Object.keys(respuestasSemanaTemp).map(k => k.split('-S')[0]))];
@@ -265,77 +269,128 @@ export default function DashboardPage() {
                     {/*Grafico de Torta*/}
                     <div className="dashboard-card">
                     <TarjetaGiratoria
-                        infoAdicional="El 80% de los encuestados no conoce el nombre del humedal. Haz clic para ver el grafico."
+                      infoAdicional="🌿 ¿Conoces el Humedal El Bosque?
+
+                      Muchos estudiantes lo ven todos los días al pasar por el Campus Miraflores de la UACh, pero pocos saben cómo se llama o cuán valioso es. Este humedal alberga una rica diversidad de flora y fauna, y forma parte del paisaje cotidiano.
+
+                      🚰 Sabías que forma parte de una red de humedales urbanos que incluye los sectores Bosque–Miraflores–Las Mulatas–Guacamayo y que fue declarada área protegida en 202, protegiendo aproximadamente 387 hectáreas.😲
+                      Cumple funciones clave como filtrar el agua, absorber carbono y ser refugio de biodiversidad local.🐸
+
+                      📊 Mira este gráfico y descubre cuántas personas aún no lo conocen.⬇️
+
+                      ¡Ayúdanos a difundir su nombre y su importancia para que más gente lo valore y lo cuide!"
+                      fotos={[
+                        "/data/fotos/mira-bosq.png"
+                      ]}
                     >
-                       <div className="nombres-y-top5">
-                          <div className="grafico-nombres">
-                            <GraficoNombres data={nombresSiNo} />
-                          </div>
-                          <div className="tabla-top5">
-                            <GraficoTop5 data={top5} />
-                          </div>
+                      <div className="nombres-y-top5">
+                        <div className="grafico-nombres">
+                          <GraficoNombres data={nombresSiNo} />
                         </div>
+                        <div className="tabla-top5">
+                          <GraficoTop5 data={top5} />
+                        </div>
+                      </div>
                     </TarjetaGiratoria>
                     </div>
                 
                     {/*Heatmap*/}
-                    <div className='bloque-nav' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '8px', gap: '8px' }} >
-                      <button onClick={() => setBloqueIndex(i => Math.max(i-1, 0))} disabled={bloqueIndex === 0}>⬅️</button>
-                      ({rangoSemanas}) 
-                      <button onClick={() => setBloqueIndex(i => Math.min(i+1, bloques.length-1))} disabled={bloqueIndex >= bloques.length-1}>➡️</button>
-                    </div>
                     <div className="dashboard-card">
-                    <TarjetaGiratoria
-                        infoAdicional="Avistamientos de animales durante la semana. Haz clic para ver el detalle."
-                    >
-                     <HeatmapAnimales data={heatmapData} semanasLabels={semanas} animales={animales} />
-                    </TarjetaGiratoria>
+                        <TarjetaGiratoria
+
+                            infoAdicional="🦫 ¿Sabías quiénes habitan el Humedal El Bosque?
+                            Este humedal, visible desde el Campus Miraflores, alberga una sorprendente variedad de fauna que muchos ignoran:
+                            Mamíferos: coipo y huillín (este último en peligro de extinción).
+                            Peces nativos: pocha del sur, puye y lamprea de bolsa.
+                            Anfibios: rana moteada, ranita de antifaz y rana grande chilena.
+                            Aves: más de 46 especies registradas, incluyendo garzas, patos y aves
+                                  del bosque valdiviano.
+                            Invertebrados: camarones de tierra, entre otros.
+                            📊 Toca el botón para ver este gráfico en donde se visualiza, por semanas, la frecuencia de avistamientos en cinco categorías; aves, insectos, ranas, peces y mamíferos, reflejando la actividad y presencia de cada grupo a lo largo del tiempo.⬇️"
+                            
+                            fotos={[
+                                "/data/fotos/coipo.png",
+                                "/data/fotos/huillin.png"
+                            ]}>
+
+                            <div className='bloque-nav' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '8px', gap: '8px' }} >
+                                <button onClick={() => setBloqueIndex(i => Math.max(i-1, 0))} disabled={bloqueIndex === 0}>⬅️</button>
+                                ({rangoSemanas}) 
+                                <button onClick={() => setBloqueIndex(i => Math.min(i+1, bloques.length-1))} disabled={bloqueIndex >= bloques.length-1}>➡️</button>
+                            </div>
+                            <HeatmapAnimales data={heatmapData} semanasLabels={semanas} animales={animales} />
+                        </TarjetaGiratoria>
                     </div>
 
                     {/*Grafico de Basura*/}
-                    <div className='bloque-nav' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '8px', gap: '8px' }} >
-                      <button onClick={() => setBloqueIndex(i => Math.max(i-1, 0))} disabled={bloqueIndex === 0}>⬅️</button>
-                      ({rangoSemanas}) 
-                      <button onClick={() => setBloqueIndex(i => Math.min(i+1, bloques.length-1))} disabled={bloqueIndex >= bloques.length-1}>➡️</button>
-                    </div>
                     <div className="dashboard-card">
-                    <TarjetaGiratoria
-                        infoAdicional="La presencia de basura es perjudicial para el ecosistema. Haz clic para ver los reportes."
-                    >
-                      <GraficoBasura dataPorSemana={basuraPorSemana} />
-                    </TarjetaGiratoria>
+                        <TarjetaGiratoria
+
+                            infoAdicional="🚮 La basura también habla del cuidado que damos al Humedal El Bosque
+                            Cada papel, botella o bolsa que se acumula en sus alrededores no solo contamina el paisaje: también pone en riesgo a las especies que habitan allí y afecta la salud del ecosistema.
+                            A pesar de estar tan cerca del Campus Miraflores, muchos aún dejan residuos sin pensar en el impacto que generan.
+                            📊 Este gráfico muestra cómo ha variado la presencia de basura a lo largo de las semanas.⬇️
+                            Refleja nuestros hábitos… y cuánto nos falta por mejorar.
+                            👉 Pequeñas acciones como no botar residuos y recoger lo que vemos pueden marcar una gran diferencia. ¡El humedal también necesita nuestro respeto!"
+                            
+                            fotos={[
+                                "/data/fotos/nobasura.png",
+                            ]}>
+
+                            <div className='bloque-nav' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '8px', gap: '8px' }} >
+                                <button onClick={() => setBloqueIndex(i => Math.max(i-1, 0))} disabled={bloqueIndex === 0}>⬅️</button>
+                                ({rangoSemanas}) 
+                                <button onClick={() => setBloqueIndex(i => Math.min(i+1, bloques.length-1))} disabled={bloqueIndex >= bloques.length-1}>➡️</button>
+                            </div>
+                            <GraficoBasura dataPorSemana={basuraPorSemana} />
+                        </TarjetaGiratoria>
                     </div>
 
                     {/*Grafico de Agua Turbia*/}
-                    <div className='bloque-nav' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '8px', gap: '8px' }} >
-                      <button onClick={() => setBloqueIndex(i => Math.max(i-1, 0))} disabled={bloqueIndex === 0}>⬅️</button>
-                      ({rangoSemanas}) 
-                      <button onClick={() => setBloqueIndex(i => Math.min(i+1, bloques.length-1))} disabled={bloqueIndex >= bloques.length-1}>➡️</button>
-                    </div>
                     <div className="dashboard-card">
-                    <TarjetaGiratoria 
-                        infoAdicional="La turbidez del agua es un indicador clave de la salud del humedal. Haz clic para ver los datos."
-                    >
-                      <GraficoAguaTurbia dataPorSemana={aguaPorSemana} />
-                    </TarjetaGiratoria>
+                        <TarjetaGiratoria
+
+                            infoAdicional="💧 La turbidez del agua, a menudo visible después de las lluvias intensas en Valdivia, puede indicar la presencia de sedimentos y contaminantes. Un agua más clara es vital para la flora acuática y para la fauna como los peces y anfibios del humedal."
+                            
+                            fotos={[
+                                "/data/fotos/aguaturbia.png"
+                            ]}>
+
+                            <div className='bloque-nav' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '8px', gap: '8px' }} >
+                                <button onClick={() => setBloqueIndex(i => Math.max(i-1, 0))} disabled={bloqueIndex === 0}>⬅️</button>
+                                ({rangoSemanas}) 
+                                <button onClick={() => setBloqueIndex(i => Math.min(i+1, bloques.length-1))} disabled={bloqueIndex >= bloques.length-1}>➡️</button>
+                            </div>
+
+                            <GraficoAguaTurbia dataPorSemana={aguaPorSemana} />
+
+                        </TarjetaGiratoria>
                     </div>
 
                     {/*Grafico de Olor*/}
-                    <div className='bloque-nav' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '8px', gap: '8px' }} >
-                      <button onClick={() => setBloqueIndex(i => Math.max(i-1, 0))} disabled={bloqueIndex === 0}>⬅️</button>
-                      ({rangoSemanas}) 
-                      <button onClick={() => setBloqueIndex(i => Math.min(i+1, bloques.length-1))} disabled={bloqueIndex >= bloques.length-1}>➡️</button>
-                    </div>
                     <div className="dashboard-card">
-                    <TarjetaGiratoria
-                        infoAdicional="Percepción de mal olor registrada durante la semana. Haz clic para ver los detalles."
-                    >
-                      <GraficoOlores data={oloresData} />
-                      </TarjetaGiratoria>
+                        <TarjetaGiratoria
+
+                            infoAdicional="👃 Los malos olores en un humedal pueden ser una señal de procesos de descomposición anaeróbica, a menudo intensificados por la presencia de contaminantes. Monitorear los olores nos ayuda a detectar problemas de calidad del agua que no son visibles a simple vista."
+                            
+                            fotos={[
+                                "/data/fotos/junquillosolor.png"
+                            ]}>
+
+                            <div className='bloque-nav' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '8px', gap: '8px' }} >
+                                <button onClick={() => setBloqueIndex(i => Math.max(i-1, 0))} disabled={bloqueIndex === 0}>⬅️</button>
+                                ({rangoSemanas}) 
+                                <button onClick={() => setBloqueIndex(i => Math.min(i+1, bloques.length-1))} disabled={bloqueIndex >= bloques.length-1}>➡️</button>
+                            </div>
+
+                            <GraficoOlores data={oloresData} />
+
+                        </TarjetaGiratoria>
                     </div>
                 </div>
                 <CajaComentarios comentarios={extraerComentarios(data)} />
             </div>
+          
         </div>
     </main>
   );

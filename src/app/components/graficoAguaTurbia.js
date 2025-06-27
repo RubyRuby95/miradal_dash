@@ -36,8 +36,8 @@ export default function GraficoAguaTurbia({ dataPorSemana }) {
   const chartData = {
     labels,
     datasets: [
-      { label: 'Sí', data: siData, backgroundColor: '#a55c20' },
-      { label: 'No', data: noData, backgroundColor: '#f0ad4e' },
+      { label: 'Sí', data: siData, backgroundColor: '#0f2a19' },
+      { label: 'No', data: noData, backgroundColor: '#004b28' },
     ]
   };
 

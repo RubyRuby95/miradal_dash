@@ -20,7 +20,7 @@ export default function GraficoOlores({ data }) {
         labels,
         datasets: [{
           data: values,
-          backgroundColor: ['#ff9999', '#ffcc66', '#99ccff'],
+          backgroundColor: ['#168f65', '#07361f', '#0a1d12'],
           borderColor: ['#fff', '#fff', '#fff'],
           borderWidth: 2
         }]
