@@ -245,6 +245,7 @@ main.main-container {
   flex-direction: row;
   gap: 1rem;
   height: 100%;
+  
 }
 
 .grafico-nombres{
@@ -374,6 +375,7 @@ main.main-container {
   width: auto;
   min-height: 300px;
   height: auto;
+  justify-content: center;
 }
 
 .bloque-nav{
@@ -436,18 +438,23 @@ main.main-container {
     width: auto;
     flex-direction: column;
     gap: 1rem;
+    align-items: center;
   }
 
   .grafico-nombres,
   .tabla-top5 {
     width: 100%;
+    align-items: center;
   }
 
   .grafgeneric {
+  display: flex;
+  flex-direction: column;
   width: auto;
   max-width: 200px;
   min-height: 300px;
   height: auto;
+  padding: auto;  
   }
 
   .heatmap-responsive-wrapper {
