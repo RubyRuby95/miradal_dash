@@ -459,12 +459,18 @@ main.main-container {
 
   .heatmap-responsive-wrapper {
     width: auto;
-    min-height: 150px;
+    min-height: 200px;
     height: auto;
     max-width: 250px;
     max-height: 500px;
     padding: 0.5rem;
+  }
+  canvas {
+    max-width: 100%;
+  }
 
+  .chartjs-size-monitor {
+    display: none;
   }
 
   .comentarios-container {

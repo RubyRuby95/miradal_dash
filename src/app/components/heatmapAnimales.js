@@ -93,8 +93,10 @@ export default function HeatmapAnimales({ data, semanasLabels, animales }) {
             position: 'left',
             ticks: {
               callback: value => animales[value]?.replace('percibe-', '') ?? ''
+            },
+            font: {
+              size: 10
             }
-            
           }
         }
       }
