@@ -47,5 +47,5 @@ export default function GraficoBasura({ dataPorSemana }) {
     plugins: { legend: { position: 'top' }, title: { display: true, text: 'Percepción de Desechos por Semana' } }
   };
 
-  return <div style={{ height: 300 }}><Bar data={chartData} options={options} /></div>;
+  return <div className='grafgeneric'><Bar data={chartData} options={options} /></div>;
 }

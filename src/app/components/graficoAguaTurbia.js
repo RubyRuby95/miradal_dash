@@ -51,5 +51,5 @@ export default function GraficoAguaTurbia({ dataPorSemana }) {
     }
   };
 
-  return <div style={{ height: 300 }}><Bar data={chartData} options={options} /></div>;
+  return <div className='grafgeneric'><Bar data={chartData} options={options} /></div>;
 }

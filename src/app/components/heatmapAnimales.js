@@ -16,8 +16,13 @@ export default function HeatmapAnimales({ data, semanasLabels, animales }) {
 
     const canvas = canvasRef.current;
     // Asegurar que el canvas tenga tamaño del contenedor
+    /*
     canvas.style.width = '100%';
     canvas.style.height = '100%';
+
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+    */
 //////
 
 
@@ -59,8 +64,11 @@ export default function HeatmapAnimales({ data, semanasLabels, animales }) {
         }]
       },
       options: {
+        responsive: true,
+        maintainAspectRatio: false,
         plugins: {
           legend: { display: false },
+          title: { display: true, text: 'Percepción de Animales por Semana' },
           tooltip: {
             callbacks: {
               title: () => '',
@@ -116,7 +124,6 @@ export default function HeatmapAnimales({ data, semanasLabels, animales }) {
     <div
       className="heatmap-responsive-wrapper"
     >
-      <h3 style={{ textAlign: 'center', margin: '0.5rem 0' }}>¿Se percibieron Animales?</h3>
       <div style={{ flex: 1, position: 'relative' }}>
         <canvas ref={canvasRef} />
       </div>

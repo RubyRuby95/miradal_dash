@@ -269,16 +269,11 @@ export default function DashboardPage() {
                     {/*Grafico de Torta*/}
                     <div className="dashboard-card">
                     <TarjetaGiratoria
-                      infoAdicional="🌿 ¿Conoces el Humedal El Bosque?
+                      infoAdicional="🌿 ¿Conoces el Humedal El Bosque-Miraflores?
 
-                      Muchos estudiantes lo ven todos los días al pasar por el Campus Miraflores de la UACh, pero pocos saben cómo se llama o cuán valioso es. Este humedal alberga una rica diversidad de flora y fauna, y forma parte del paisaje cotidiano.
-
-                      🚰 Sabías que forma parte de una red de humedales urbanos que incluye los sectores Bosque–Miraflores–Las Mulatas–Guacamayo y que fue declarada área protegida en 202, protegiendo aproximadamente 387 hectáreas.😲
-                      Cumple funciones clave como filtrar el agua, absorber carbono y ser refugio de biodiversidad local.🐸
-
-                      📊 Mira este gráfico y descubre cuántas personas aún no lo conocen.⬇️
-
-                      ¡Ayúdanos a difundir su nombre y su importancia para que más gente lo valore y lo cuide!"
+                      Muchos estudiantes lo ven todos los días al pasar por el Campus Miraflores de la UACh, pero pocos saben cómo se llama o cuán valioso es. 
+                      🚰 Sabías que forma parte de una red de humedales urbanos que incluye los sectores Bosque–Miraflores–Las Mulatas–Guacamayo.
+                      Cumple funciones clave como filtrar el agua, absorber carbono y ser refugio de biodiversidad local."
                       fotos={[
                         "/data/fotos/mira-bosq.png"
                       ]}
@@ -298,22 +293,19 @@ export default function DashboardPage() {
                     <div className="dashboard-card">
                         <TarjetaGiratoria
 
-                            infoAdicional="🦫 ¿Sabías quiénes habitan el Humedal El Bosque?
-                            Este humedal, visible desde el Campus Miraflores, alberga una sorprendente variedad de fauna que muchos ignoran:
-                            Mamíferos: coipo y huillín (este último en peligro de extinción).
-                            Peces nativos: pocha del sur, puye y lamprea de bolsa.
-                            Anfibios: rana moteada, ranita de antifaz y rana grande chilena.
-                            Aves: más de 46 especies registradas, incluyendo garzas, patos y aves
-                                  del bosque valdiviano.
-                            Invertebrados: camarones de tierra, entre otros.
-                            📊 Toca el botón para ver este gráfico en donde se visualiza, por semanas, la frecuencia de avistamientos en cinco categorías; aves, insectos, ranas, peces y mamíferos, reflejando la actividad y presencia de cada grupo a lo largo del tiempo.⬇️"
+                            infoAdicional="Este humedal alberga una sorprendente variedad de fauna que muchos ignoran:
+                            Mamíferos: coipo y huillín.
+                            Peces nativos: pocha del sur y lamprea de bolsa.
+                            Anfibios: rana moteada y rana grande chilena.
+                            Aves: más de 46 especies registradas.
+                            Invertebrados: camarones de tierra, entre otros."
                             
                             fotos={[
                                 "/data/fotos/coipo.png",
                                 "/data/fotos/huillin.png"
                             ]}>
 
-                            <div className='bloque-nav' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '8px', gap: '8px' }} >
+                            <div className='bloque-nav'>
                                 <button onClick={() => setBloqueIndex(i => Math.max(i-1, 0))} disabled={bloqueIndex === 0}>⬅️</button>
                                 ({rangoSemanas}) 
                                 <button onClick={() => setBloqueIndex(i => Math.min(i+1, bloques.length-1))} disabled={bloqueIndex >= bloques.length-1}>➡️</button>
@@ -326,18 +318,13 @@ export default function DashboardPage() {
                     <div className="dashboard-card">
                         <TarjetaGiratoria
 
-                            infoAdicional="🚮 La basura también habla del cuidado que damos al Humedal El Bosque
-                            Cada papel, botella o bolsa que se acumula en sus alrededores no solo contamina el paisaje: también pone en riesgo a las especies que habitan allí y afecta la salud del ecosistema.
-                            A pesar de estar tan cerca del Campus Miraflores, muchos aún dejan residuos sin pensar en el impacto que generan.
-                            📊 Este gráfico muestra cómo ha variado la presencia de basura a lo largo de las semanas.⬇️
-                            Refleja nuestros hábitos… y cuánto nos falta por mejorar.
-                            👉 Pequeñas acciones como no botar residuos y recoger lo que vemos pueden marcar una gran diferencia. ¡El humedal también necesita nuestro respeto!"
+                            infoAdicional="🚮 Botar basura en lugares indebidos daña el medioambiente, pone en peligro a la fauna local y le quita belleza al entorno."
                             
                             fotos={[
                                 "/data/fotos/nobasura.png",
                             ]}>
 
-                            <div className='bloque-nav' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '8px', gap: '8px' }} >
+                            <div className='bloque-nav'>
                                 <button onClick={() => setBloqueIndex(i => Math.max(i-1, 0))} disabled={bloqueIndex === 0}>⬅️</button>
                                 ({rangoSemanas}) 
                                 <button onClick={() => setBloqueIndex(i => Math.min(i+1, bloques.length-1))} disabled={bloqueIndex >= bloques.length-1}>➡️</button>
@@ -350,13 +337,13 @@ export default function DashboardPage() {
                     <div className="dashboard-card">
                         <TarjetaGiratoria
 
-                            infoAdicional="💧 La turbidez del agua, a menudo visible después de las lluvias intensas en Valdivia, puede indicar la presencia de sedimentos y contaminantes. Un agua más clara es vital para la flora acuática y para la fauna como los peces y anfibios del humedal."
+                            infoAdicional="💧  El agua se vuelve turbia por la contaminación con tierra, químicos o desechos. Esto afecta la vida acuática y el ecosistema."
                             
                             fotos={[
                                 "/data/fotos/aguaturbia.png"
                             ]}>
 
-                            <div className='bloque-nav' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '8px', gap: '8px' }} >
+                            <div className='bloque-nav'>
                                 <button onClick={() => setBloqueIndex(i => Math.max(i-1, 0))} disabled={bloqueIndex === 0}>⬅️</button>
                                 ({rangoSemanas}) 
                                 <button onClick={() => setBloqueIndex(i => Math.min(i+1, bloques.length-1))} disabled={bloqueIndex >= bloques.length-1}>➡️</button>
@@ -371,13 +358,13 @@ export default function DashboardPage() {
                     <div className="dashboard-card">
                         <TarjetaGiratoria
 
-                            infoAdicional="👃 Los malos olores en un humedal pueden ser una señal de procesos de descomposición anaeróbica, a menudo intensificados por la presencia de contaminantes. Monitorear los olores nos ayuda a detectar problemas de calidad del agua que no son visibles a simple vista."
+                            infoAdicional="👃 Los malos olores suelen ser señales de contaminación, como desechos en descomposición o aguas sucias. Es una alerta de que algo en el ambiente no está bien."
                             
                             fotos={[
                                 "/data/fotos/junquillosolor.png"
                             ]}>
 
-                            <div className='bloque-nav' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '8px', gap: '8px' }} >
+                            <div className='bloque-nav'>
                                 <button onClick={() => setBloqueIndex(i => Math.max(i-1, 0))} disabled={bloqueIndex === 0}>⬅️</button>
                                 ({rangoSemanas}) 
                                 <button onClick={() => setBloqueIndex(i => Math.min(i+1, bloques.length-1))} disabled={bloqueIndex >= bloques.length-1}>➡️</button>

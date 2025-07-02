@@ -49,7 +49,7 @@ export default function GraficoNombres({ data }) {
   };
 
   return (
-    <div style={{ width: '80%', height: '80%' }}>
+    <div className='grafgeneric'>
       <Pie data={pieData} options={options} />
     </div>
   );

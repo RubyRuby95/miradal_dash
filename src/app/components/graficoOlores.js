@@ -45,5 +45,5 @@ export default function GraficoOlores({ data }) {
     }
   };
 
-  return <div style={{ height: 300 }}><Pie data={pieData.chart} options={options} /></div>;
+  return <div className='grafgeneric'><Pie data={pieData.chart} options={options} /></div>;
 }
