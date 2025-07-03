@@ -37,20 +37,21 @@ export default function DashboardPage() {
     const fetchRespuestas = async () => {
       try {
         //*USO DE JSON LOCAL DE PRUEBA */
-        
+        /*
         const res = await fetch('./data/respuestas.json');
         const json= await res.json();
         setData(json);
-        
+        */
         /*fin*/
 
         /*LLAMADA A API (ANTIGUA) */
-        //const res = await apiClient.get("/api/encuesta");
-        //const json = await res.data;
-        //console.log('lo q llega de api', json);
+
+        const res = await apiClient.get("/api/obtenerRespuestas");
+        const json = await res.data;
+        console.log('lo q llega de api', json);
         /*fin*/
       
-      //  setData(json);
+        setData(json);
 
 
       /*SUPER LLAMADA A API */
