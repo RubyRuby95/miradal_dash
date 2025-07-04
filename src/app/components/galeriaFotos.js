@@ -17,7 +17,7 @@ export default function GaleriaFotos({ fotos = [], abierta, onClose }) {
   return (
     <div className="galeria-modal">
       <div className="galeria-contenido">
-        <img src={fotos[fotoActual]} alt={`Foto ${fotoActual + 1}`} className="galeria-img"/>
+        <image src={fotos[fotoActual]} alt={`Foto ${fotoActual + 1}`} className="galeria-img"/>
         <div className="galeria-controles">
           <button onClick={handleAnterior} className="galeria-flecha">←</button>
           <button onClick={handleSiguiente} className="galeria-flecha">→</button>
