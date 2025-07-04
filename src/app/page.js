@@ -137,7 +137,7 @@ export default function DashboardPage() {
   }, [respuestasSemana]);
   //console.log('bloques', bloques);
 
-  const semanas = bloques[bloqueIndex] || [];
+  const semanas = useMemo(() => bloques[bloqueIndex] || [], [bloques, bloqueIndex]);
   const rangoSemanas = useMemo(() => {
     if (semanas.length === 0) return '';
 
@@ -175,8 +175,9 @@ export default function DashboardPage() {
     .filter(Array.isArray); // <--- solo arrays válidos
 
 
-  const animales = ['percibe-aves', 'percibe-peces', 'percibe-ganado', 'percibe-ranas', 'percibe-insectos'];
-
+  const animales = useMemo(() => (
+    ['percibe-aves', 'percibe-peces', 'percibe-ganado', 'percibe-ranas', 'percibe-insectos']
+  ), []);
   const heatmapData = useMemo(() => {
     const celdas = [];
 
@@ -271,7 +272,7 @@ export default function DashboardPage() {
                     <TarjetaGiratoria
                       infoAdicional={
                           <div style={{ textAlign: 'center', fontWeight: 'bold' }}>
-                            <p>¿🌿 ¿Conoces el Humedal "El Bosque"?</p>
+                            <p><strong>🌿 ¿Conoces el Humedal &quot;El Bosque&quot;?</strong></p>
                           <div style={{ textAlign: 'justify', fontSize: '12px', fontWeight: 'normal' }}>
                             <p>
                               Muchos estudiantes lo ven todos los días al pasar por el Campus Miraflores de la UACh,
@@ -284,9 +285,9 @@ export default function DashboardPage() {
                               protegiendo aproximadamente 387 hectáreas. 😲
                             </p>
                             <p>
-                              Entonces la parte que pasa por nuestro campus peretenece al humedal "El bosque"
-                              de ahí su nombre, el cual pobablemente no conocias. 🤭
-                           </p>
+                              Entonces la parte que pasa por nuestro campus pertenece al humedal &quot;El bosque&quot;, 
+                              de ahí su nombre, el cual probablemente no conocías. 🤭
+                            </p>
 
                             <p>
                               📊 Mira este gráfico y descubre cuántas personas aún no lo conocen, y las que sí. ⬇️
