@@ -324,7 +324,7 @@ export default function DashboardPage() {
                               <div style={{ textAlign: 'center', fontWeight: 'bold' }}>
                                 🦫 ¿Sabías quiénes habitan el Humedal El Bosque?
                               </div>
-                              <div style={{ textAlign: 'justify', fontSize: '12px' }}>
+                              <div style={{ textAlign: 'justify', fontSize: '12px', fontWeight: 'normal' }}>
                                 <p>
                                   Este humedal, visible desde el Campus Miraflores, alberga una sorprendente variedad de fauna que muchos ignoran:
                                 </p>
