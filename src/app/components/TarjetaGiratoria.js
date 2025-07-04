@@ -1,70 +1,62 @@
 'use client';
 import { useState } from "react";
+import GaleriaFotos from "./galeriaFotos";
 
-export default function TarjetaGiratoria({ children, infoAdicional, fotos = [] }) {
+export default function TarjetaGiratoria({ children, infoAdicional, fotos }) {
   const [volteado, setVolteado] = useState(false);
   const [galeriaAbierta, setGaleriaAbierta] = useState(false);
-  const [fotoActual, setFotoActual] = useState(0);
 
   const handleFlip = (e) => {
     e.stopPropagation();
     setVolteado(!volteado);
   };
 
-  const handleVerFotos = (e) => {
+  const handleAbrirGaleria = (e) => {
     e.stopPropagation();
     setGaleriaAbierta(true);
-    setFotoActual(0);
   };
 
   const handleCerrarGaleria = () => {
     setGaleriaAbierta(false);
   };
 
-  const handleAnterior = () => {
-    setFotoActual((prev) => (prev === 0 ? fotos.length - 1 : prev - 1));
-  };
-
-  const handleSiguiente = () => {
-    setFotoActual((prev) => (prev === fotos.length - 1 ? 0 : prev + 1));
-  };
-
   return (
-    <div className="flip-card">
-      <div className={`flip-inner ${volteado ? "flipped" : ""}`}>
-
-        {/* Anverso */}
-        <div className="flip-front">
-          <p className="flip-text">{infoAdicional}</p>
-          <div className="botones-container">
-            <button onClick={handleFlip} className="flip-button">Ver Gráfico</button>
-            <button onClick={handleVerFotos} className="flip-button">Ver fotos</button>
+    <>
+      <div className="flip-card">
+        <div className={`flip-inner ${volteado ? "flipped" : ""}`}>
+          <div className="flip-front">
+            {/* SOLUCIÓN: Se cambió la etiqueta <p> por <div> para evitar el error. */}
+            <div className="flip-text">{infoAdicional}</div>
+            <div className="botones-container">
+              <button onClick={handleFlip} className="flip-button">
+                Ver Gráfico
+              </button>
+              {/* El botón de ver fotos solo se muestra si la propiedad 'fotos' existe y tiene contenido */}
+              {fotos && fotos.length > 0 && (
+                <button onClick={handleAbrirGaleria} className="flip-button">
+                  Ver fotos
+                </button>
+              )}
+            </div>
           </div>
-        </div>
-
-        {/* Reverso */}
-        <div className="flip-back">
-          <div className="flip-content">{children}</div>
-          <div className="botones-container">
-            <button onClick={handleFlip} className="flip-button">Ver Información</button>
-            <button onClick={handleVerFotos} className="flip-button">Ver fotos</button>
+          <div className="flip-back">
+            <div className="flip-content">
+              {children}
+            </div>
+            <button onClick={handleFlip} className="flip-button">
+              Ver Información
+            </button>
           </div>
         </div>
       </div>
-
-      {/* Modal de galería */}
-      {galeriaAbierta && fotos.length > 0 && (
-        <div className="galeria-modal">
-          <div className="galeria-contenido">
-            <img src={fotos[fotoActual]} alt={`Foto ${fotoActual + 1}`} className="galeria-img" />
-            <div className="galeria-controles">
-              <button onClick={handleAnterior} className="galeria-flecha">←</button>
-              <button onClick={handleSiguiente} className="galeria-flecha">→</button>
-            </div>
-            <button onClick={handleCerrarGaleria} className="galeria-cerrar">✕</button>
-          </div>
-        </div>
+      {/* La galería solo se renderiza si hay fotos */}
+      {fotos && fotos.length > 0 && (
+        <GaleriaFotos 
+          fotos={fotos} 
+          abierta={galeriaAbierta} 
+          onClose={handleCerrarGaleria} 
+        />
       )}
-    </div>
+    </>
   );
 }

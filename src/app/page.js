@@ -45,10 +45,9 @@ export default function DashboardPage() {
         /*fin*/
 
         /*LLAMADA A API (ANTIGUA) */
-
         const res = await apiClient.get("/api/obtenerRespuestas");
         const json = await res.data;
-        console.log('lo q llega de api', json);
+        //console.log('lo q llega de api', json);
         /*fin*/
       
         setData(json);
@@ -270,13 +269,39 @@ export default function DashboardPage() {
                     {/*Grafico de Torta*/}
                     <div className="dashboard-card">
                     <TarjetaGiratoria
-                      infoAdicional="🌿 ¿Conoces el Humedal El Bosque-Miraflores?
+                      infoAdicional={
+                          <div style={{ textAlign: 'center', fontWeight: 'bold' }}>
+                            <p><strong>🌿 ¿Conoces el Humedal "El Bosque"?</strong></p>
+                          <div style={{ textAlign: 'justify', fontSize: '12px', fontWeight: 'normal' }}>
+                            <p>
+                              Muchos estudiantes lo ven todos los días al pasar por el Campus Miraflores de la UACh,
+                              pero pocos saben cómo se llama o cuán valioso es.
+                            </p>
 
-                      Muchos estudiantes lo ven todos los días al pasar por el Campus Miraflores de la UACh, pero pocos saben cómo se llama o cuán valioso es. 
-                      🚰 Sabías que forma parte de una red de humedales urbanos que incluye los sectores Bosque–Miraflores–Las Mulatas–Guacamayo.
-                      Cumple funciones clave como filtrar el agua, absorber carbono y ser refugio de biodiversidad local."
+                            <p>
+                              🚰 Este humedal forma parte de una red de humedales urbanos que incluye los sectores
+                              Bosque–Miraflores–Las Mulatas–Guacamayo y que fue declarada área protegida en 2021,
+                              protegiendo aproximadamente 387 hectáreas. 😲
+                            </p>
+                            <p>
+                              Entonces la parte que pasa por nuestro campus peretenece al humedal "El bosque"
+                              de ahí su nombre, el cual pobablemente no conocias. 🤭
+                           </p>
+
+                            <p>
+                              📊 Mira este gráfico y descubre cuántas personas aún no lo conocen, y las que sí. ⬇️
+                            </p>
+                          </div>
+                        </div>
+                      }
+                        
                       fotos={[
-                        "/data/fotos/mira-bosq.png"
+                        "/data/fotos/humedal1.png",
+                        "/data/fotos/humedal2.png",
+                        "/data/fotos/humedal3.png",
+                        "/data/fotos/humedal4.png",
+                        "/data/fotos/humedal5.png"
+
                       ]}
                     >
                       <div className="nombres-y-top5">
@@ -293,17 +318,40 @@ export default function DashboardPage() {
                     {/*Heatmap*/}
                     <div className="dashboard-card">
                         <TarjetaGiratoria
+                            infoAdicional={
+                            <div>
+                              <div style={{ textAlign: 'center', fontWeight: 'bold' }}>
+                                🦫 ¿Sabías quiénes habitan el Humedal El Bosque?
+                              </div>
+                              <div style={{ textAlign: 'justify', fontSize: '12px' }}>
+                                <p>
+                                  Este humedal, visible desde el Campus Miraflores, alberga una sorprendente variedad de fauna que muchos ignoran:
+                                </p>
 
-                            infoAdicional="Este humedal alberga una sorprendente variedad de fauna que muchos ignoran:
-                            Mamíferos: coipo y huillín.
-                            Peces nativos: pocha del sur y lamprea de bolsa.
-                            Anfibios: rana moteada y rana grande chilena.
-                            Aves: más de 46 especies registradas.
-                            Invertebrados: camarones de tierra, entre otros."
-                            
+                                <p>
+                                  <strong>Mamíferos:</strong> coipo y huillín (este último en peligro de extinción).<br />
+                                  <strong>Peces nativos:</strong> pocha del sur, puye y lamprea de bolsa.<br />
+                                  <strong>Anfibios:</strong> rana moteada, ranita de antifaz y rana grande chilena.<br />
+                                  <strong>Aves:</strong> más de 46 especies registradas, incluyendo garzas, patos y aves del bosque valdiviano.<br />
+                                </p>
+
+                                <p>
+                                  📊 Mira este gráfico para ver su actividad durante las semanas.⬇️
+                                </p>
+                              </div>
+                            </div>
+                            }
+      
                             fotos={[
                                 "/data/fotos/coipo.png",
-                                "/data/fotos/huillin.png"
+                                "/data/fotos/huillin.png",
+                                "/data/fotos/pochadelsur.png",
+                                "/data/fotos/garzachica.png",
+                                "/data/fotos/patoreal.png",
+                                "/data/fotos/pimpollo.png",
+                                "/data/fotos/chuncho.png",
+                                "/data/fotos/puye.png",
+                                "/data/fotos/ranaceja.png"
                             ]}>
 
                             <div className='bloque-nav'>
@@ -318,13 +366,28 @@ export default function DashboardPage() {
                     {/*Grafico de Basura*/}
                     <div className="dashboard-card">
                         <TarjetaGiratoria
+                            infoAdicional={
+                            <div style={{ textAlign: 'center', fontWeight: 'bold' }}>
+                              <p><strong>🚮 La basura también habla del cuidado que damos al Humedal El Bosque</strong></p>
+                            <div style={{ textAlign: 'justify', fontSize: '12px', fontWeight: 'normal' }}>
+                                <p>
+                                  Cada papel, botella o bolsa que se acumula en sus alrededores no solo contamina el paisaje sino que 
+                                  también pone en riesgo a las especies que habitan allí y afecta la salud del ecosistema.
+                                </p>
 
-                            infoAdicional="🚮 Botar basura en lugares indebidos daña el medioambiente, pone en peligro a la fauna local y le quita belleza al entorno."
-                            
-                            fotos={[
-                                "/data/fotos/nobasura.png",
-                            ]}>
+                                <p>
+                                  📊 Este gráfico muestra cómo ha variado la presencia de basura a lo largo de las semanas. ⬇️
+                                </p>
 
+                                <p>
+                                  Refleja nuestros hábitos y cuánto nos falta por mejorar.
+                                  👉Pequeñas acciones como no botar residuos y recoger lo que vemos pueden marcar una gran diferencia.
+                                  ♻️
+                                </p>
+                              </div>
+                            </div>
+                            }
+                        >
                             <div className='bloque-nav'>
                                 <button onClick={() => setBloqueIndex(i => Math.max(i-1, 0))} disabled={bloqueIndex === 0}>⬅️</button>
                                 ({rangoSemanas}) 
@@ -337,42 +400,70 @@ export default function DashboardPage() {
                     {/*Grafico de Agua Turbia*/}
                     <div className="dashboard-card">
                         <TarjetaGiratoria
+                            infoAdicional={
+                              <div style={{ textAlign: 'center', fontWeight: 'bold' }}>
+                                <p><strong>💧 ¿Qué tan limpia está su agua?</strong></p>
+                                <div style={{ textAlign: 'justify', fontSize: '12px', fontWeight: 'normal' }}>
+                                  <p>
+                                    El agua de un humedal puede tener distintos niveles de turbiedad, 
+                                    lo que nos habla de su calidad y de posibles impactos ambientales.
+                                  </p>
 
-                            infoAdicional="💧  El agua se vuelve turbia por la contaminación con tierra, químicos o desechos. Esto afecta la vida acuática y el ecosistema."
-                            
-                            fotos={[
-                                "/data/fotos/aguaturbia.png"
-                            ]}>
+                                  <p>
+                                  Esta puede aumentar por lluvias intensas, presencia de desechos, o por el paso de animales como el ganado. Esto afecta no solo la apariencia del agua, sino también a las especies que viven en ella.
+                                  </p>
 
+                                  <p>
+                                    📊 Este gráfico muestra cómo ha variado la turbiedad del agua en distintas semanas. ⬇️
+                                  </p>
+
+                                  <p>
+                                    👉 Observar estos datos nos ayuda a entender cómo estamos afectando al humedal y por qué es urgente protegerlo.
+                                  </p>
+                                </div>
+                              </div>
+                            }
+                        >
                             <div className='bloque-nav'>
                                 <button onClick={() => setBloqueIndex(i => Math.max(i-1, 0))} disabled={bloqueIndex === 0}>⬅️</button>
                                 ({rangoSemanas}) 
                                 <button onClick={() => setBloqueIndex(i => Math.min(i+1, bloques.length-1))} disabled={bloqueIndex >= bloques.length-1}>➡️</button>
                             </div>
-
                             <GraficoAguaTurbia dataPorSemana={aguaPorSemana} />
-
                         </TarjetaGiratoria>
                     </div>
 
                     {/*Grafico de Olor*/}
                     <div className="dashboard-card">
                         <TarjetaGiratoria
+                            infoAdicional={
+                              <div style={{ textAlign: 'center', fontWeight: 'bold' }}>
+                                <p><strong>👃 ¿A qué huele el humedal?</strong></p>
+                                <div style={{ textAlign: 'justify', fontSize: '12px', fontWeight: 'normal' }}>
+                                  <p>
+                                    El olor del Humedal El Bosque es un indicador de su estado.
+                                    Cuando el humedal está sano, su aroma suele ser neutro o vegetal. Pero cuando hay acumulación de materia orgánica,
+                                    contaminación o poca circulación de agua, puede generar olores desagradables. 💩
+                                  </p>
 
-                            infoAdicional="👃 Los malos olores suelen ser señales de contaminación, como desechos en descomposición o aguas sucias. Es una alerta de que algo en el ambiente no está bien."
-                            
-                            fotos={[
-                                "/data/fotos/junquillosolor.png"
-                            ]}>
+                                  <p>
+                                    📊 Este gráfico muestra cómo ha cambiado la intensidad del olor en las últimas semanas. ⬇️
+                                  </p>
 
+                                  <p>
+                                    👉 Prestar atención al olor es una forma sencilla de cuidar este ecosistema.
+                                    Si algo huele mal, es porque el humedal nos está diciendo algo. ¡Escuchémoslo!
+                                  </p>
+                                </div>
+                              </div>
+                            }
+                        >
                             <div className='bloque-nav'>
                                 <button onClick={() => setBloqueIndex(i => Math.max(i-1, 0))} disabled={bloqueIndex === 0}>⬅️</button>
                                 ({rangoSemanas}) 
                                 <button onClick={() => setBloqueIndex(i => Math.min(i+1, bloques.length-1))} disabled={bloqueIndex >= bloques.length-1}>➡️</button>
                             </div>
-
                             <GraficoOlores data={oloresData} />
-
                         </TarjetaGiratoria>
                     </div>
                 </div>
