@@ -1,5 +1,4 @@
 import { parseISO, getWeek, getYear } from "date-fns";
-import { constructFromSymbol } from "date-fns/constants";
 
 export function contarRespuestasPorSemana(listarespuestas) {
   const agrupado = {};

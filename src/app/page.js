@@ -272,7 +272,7 @@ export default function DashboardPage() {
                     <TarjetaGiratoria
                       infoAdicional={
                           <div style={{ textAlign: 'center', fontWeight: 'bold' }}>
-                            <p><strong>🌿 ¿Conoces el Humedal &quot;El Bosque&quot;?</strong></p>
+                            <p><strong>🌿 ¿Conoces el Humedal &quot;Miraflores&quot;?</strong></p>
                           <div style={{ textAlign: 'justify', fontSize: '12px', fontWeight: 'normal' }}>
                             <p>
                               Muchos estudiantes lo ven todos los días al pasar por el Campus Miraflores de la UACh,
@@ -285,7 +285,7 @@ export default function DashboardPage() {
                               protegiendo aproximadamente 387 hectáreas. 😲
                             </p>
                             <p>
-                              Entonces la parte que pasa por nuestro campus pertenece al humedal &quot;El bosque&quot;, 
+                              Entonces la parte que pasa por nuestro campus pertenece al humedal &quot;Miraflores&quot;, 
                               de ahí su nombre, el cual probablemente no conocías. 🤭
                             </p>
 
