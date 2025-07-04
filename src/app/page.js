@@ -271,7 +271,7 @@ export default function DashboardPage() {
                     <TarjetaGiratoria
                       infoAdicional={
                           <div style={{ textAlign: 'center', fontWeight: 'bold' }}>
-                            <p><strong>🌿 ¿Conoces el Humedal "El Bosque"?</strong></p>
+                            <p>¿🌿 ¿Conoces el Humedal "El Bosque"?</p>
                           <div style={{ textAlign: 'justify', fontSize: '12px', fontWeight: 'normal' }}>
                             <p>
                               Muchos estudiantes lo ven todos los días al pasar por el Campus Miraflores de la UACh,
