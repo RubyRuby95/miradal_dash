@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import Image from 'next/image';
 
 export default function GaleriaFotos({ fotos = [], abierta, onClose }) {
   const [fotoActual, setFotoActual] = useState(0);
@@ -17,7 +18,15 @@ export default function GaleriaFotos({ fotos = [], abierta, onClose }) {
   return (
     <div className="galeria-modal">
       <div className="galeria-contenido">
-        <image src={fotos[fotoActual]} alt={`Foto ${fotoActual + 1}`} className="galeria-img"/>
+        <div className="galeria-img-wrapper" style={{ position: 'relative', width: '100%', height: '300px' }}>
+          <Image
+            src={fotos[fotoActual]}
+            alt={`Foto ${fotoActual + 1}`}
+            layout="fill"
+            objectFit="contain"
+            className="galeria-img"
+          />
+        </div>
         <div className="galeria-controles">
           <button onClick={handleAnterior} className="galeria-flecha">←</button>
           <button onClick={handleSiguiente} className="galeria-flecha">→</button>
